@@ -1,0 +1,54 @@
+.cover-image-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & img {
+        height: 100%;
+        background-color: #fff;
+    }
+
+    & button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0;
+    }
+
+    &:hover > button {
+        opacity: 1;
+        transition: all 0.25s ease-in-out;
+    }
+}
+
+.info-image-container {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & .content {
+        display: flex;
+
+        & img {
+            width: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    };
+}
+
+.square-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    & img {
+        width: 100%;
+    }
+}

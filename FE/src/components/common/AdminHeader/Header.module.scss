@@ -1,0 +1,18 @@
+.header-wrapper {
+    position: sticky;
+    position: -webkit-sticky;    
+    top: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
+}
+
+
+.adheader-container {
+    width: 100%;
+    height: var(--admin-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+

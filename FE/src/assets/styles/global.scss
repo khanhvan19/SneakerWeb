@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --admin-sidebar-width: 280px;
+    --admin-header-height: 60px;
+    --admin-form-header-height: 56px;
+    --admin-scrollbar-width: 6px;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+    background-color: transparent;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.custom-scrollbar {
+    &::-webkit-scrollbar {
+        width: var(--admin-scrollbar-width);
+        height: var(--admin-scrollbar-width);
+    }
+    
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 16px;
+        background-color: transparent;
+    }
+    
+    &:hover::-webkit-scrollbar-thumb {
+        background-color: #d4d4d4bf;
+    }
+}
+
+.text-eclipse {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    
+    &.one-line {
+        -webkit-line-clamp: 1;
+    }
+
+    &.two-line {
+        -webkit-line-clamp: 2;
+    }
+}
+
+.content-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-top-center {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.content-left-center {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.content-right-center {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.content-center-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+//IMPORTANT
+.popover-class {
+    pointer-events: none !important;
+}
+
+.highlighter {
+    color: #00ab55;
+    text-decoration: underline;
+    text-decoration-thickness: 0.5px;
+    background: none;
+}
+
+
+
+
+

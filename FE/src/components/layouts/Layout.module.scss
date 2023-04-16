@@ -1,0 +1,34 @@
+.private-layout-content {
+    display: flex;
+
+    & .leftside-wrapper {
+        flex-shrink: 0;
+        width: var(--admin-sidebar-width);
+    }
+
+    & .rightside-wrapper {
+        flex: 1;
+        min-height: 100vh;
+        width: calc(100% - var(--admin-sidebar-width));
+
+        & .rightside-content {
+            padding: 16px;
+            padding-top: 24px ;
+            height: calc(100% - var(--admin-header-height));
+        }
+    }
+}
+
+.private-form-wrapper {
+    height: 100vh;
+    background-color: #e9ebee;
+
+    & header {
+        background-color: #fff;
+        height: var(--admin-form-header-height);
+        padding: 0 12px;
+        box-shadow: 
+            rgba(50, 50, 93, 0.25) 0px 3px 6px -2px,
+            rgba(0, 0, 0, 0.3) 0px 1px 2px -2px;
+    } 
+}

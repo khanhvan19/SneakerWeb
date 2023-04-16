@@ -1,0 +1,38 @@
+.profile-banner {
+    height: 240px;
+    position: relative;
+    overflow: hidden;
+
+    & .profile-banner-content {
+        position: absolute;
+        bottom: 16px;
+        left: 32px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    & .cover-image {
+        height: 190px;
+        background-color: gray;
+    }
+}
+
+.editting {
+    position: relative;
+    padding-right: 48px;
+
+    & .btn-edit {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        // display: none;
+        visibility: hidden;
+        cursor: pointer;
+    }
+
+    &:hover .btn-edit {
+        // display: inline-block;
+        visibility: visible;
+    }
+}

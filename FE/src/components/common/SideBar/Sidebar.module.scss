@@ -1,0 +1,29 @@
+.adsidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--admin-sidebar-width);
+    padding-right: 2px;
+    border-right: 0.5px dashed;
+    
+    & .adsidebar-container {
+        overflow-y: scroll;
+        padding: 16px;
+        padding-right: calc(16px - var(--admin-scrollbar-width) - 2px);
+        height: 100%;
+    }
+}
+
+.adsidebar-content {
+    > div {
+        background-color: transparent !important;
+        background-image: none !important;
+        box-shadow: none !important;
+        border-radius: 8px;
+        
+        &::before {
+            display: none;
+        }
+    }
+}
