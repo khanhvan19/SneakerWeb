@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
-import { replace, useFormik } from 'formik';
-import { ToastContainer, toast } from 'react-toastify';
+import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 
 import { 
     Box, 
@@ -207,7 +207,6 @@ function ResetPassword() {
                             </Button>
                         </DialogActions>
                     </Dialog>
-                    <ToastContainer />
                 </div>
             ) 
             : (

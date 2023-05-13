@@ -29,26 +29,11 @@ const customerSchema = new mongoose.Schema({
         maxlength: 5,
     },
     birthday: Date,
-    address: [{
-        province: String,
-        district: String,
-        ward: String,
-        addressDetail: String,
-        addressString: String,
-        name: {
-            type: String,
-            trim: true,
-        },
-        phone: {
-            type: String,
-            maxlength: 12,
-        },
-        isPrimary: Boolean,
-    }],
     status: {
         type: Boolean,
         required: true
-    }
+    },
+    favorites: Array
 }, { timestamps: true })
 
 customerSchema.pre('save', function (next) {

@@ -9,14 +9,7 @@ const { uploadCloudEmployee } = require('../middlewares/uploaderImage')
 router.route('/')
     .get(verifyAccessToken, customerController.getAllCustomer)
 
-router.route('/:id')
-    .get(customerController.getOneCustomer)
-    .put(uploadCloudEmployee.single('avatar'), customerController.updateInfoCustomer)
-    .delete(customerController.deleteCustomer);
-
-router.route('/lock/:id')
-    .put(customerController.toggleStatus);
-
+//AUTH
 router.route('/register')
     .post(customerController.register);
 
@@ -24,11 +17,24 @@ router.route('/login')
     .post(customerController.login);
 
 router.route('/refresh')
-    .post(tokenController.requestRefreshToken);
+    .post(tokenController.requestRefreshCustomerToken);
 
 router.route('/logout')
     .post(customerController.logout);
-    
+
+router.route('/change-password/:id')
+    .put(customerController.changePassword);
+
+//ADMIN PAGE
+router.route('/lock/:id')
+    .put(customerController.toggleStatus);
+
+router.route('/:id')
+    .get(customerController.getOneCustomer)
+    .put(uploadCloudEmployee.single('avatar'), customerController.updateInfoCustomer)
+
+
+//RESET PASSWORD
 router.route('/forgot-password')
     .post(customerController.sendMailVerifyResetPassword);
 

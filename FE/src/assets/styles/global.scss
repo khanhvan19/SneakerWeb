@@ -15,6 +15,8 @@
 
 body {
     font-family: 'Noto Sans', sans-serif !important;
+    text-decoration-thickness: 1px !important;
+    
 }
 
 a {
@@ -25,6 +27,10 @@ a {
     &:hover {
         background-color: transparent;
     }
+}
+
+ul {
+    padding-left: 2rem;
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -79,6 +85,12 @@ input[type=number]::-webkit-inner-spin-button {
     justify-content: center;
 }
 
+.content-bottom-center {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
 .content-left-center {
     display: flex;
     align-items: center;
@@ -109,7 +121,8 @@ input[type=number]::-webkit-inner-spin-button {
     background: none;
 }
 
-
-
-
-
+.swal2-radio {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

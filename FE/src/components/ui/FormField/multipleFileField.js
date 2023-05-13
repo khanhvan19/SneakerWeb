@@ -39,14 +39,6 @@ function MultipleFileField(props) {
         if(e.target.files) {
             const files = e.target.files;
             setFieldValue(name, [...value, ...files])
-
-            // const arrFiles = Array.from(files)
-            // const arrUlr = arrFiles.map((file) => ({
-            //     link: URL.createObjectURL(file),
-            //     path: file.name,
-            // }));
-            // setImages((prev) => prev.concat(arrUlr));
-            // arrFiles.map((file) => URL.revokeObjectURL(file))
         }
     }  
 

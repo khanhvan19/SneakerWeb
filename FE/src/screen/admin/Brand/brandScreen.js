@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { 
     Box, 
@@ -325,7 +325,6 @@ function BrandScreen() {
                 />
             </Dialog>
 
-            <ToastContainer />
         </>
     );
 }

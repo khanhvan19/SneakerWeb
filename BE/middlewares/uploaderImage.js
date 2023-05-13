@@ -33,6 +33,24 @@ const storage_product = new CloudinaryStorage({
     }
 });
 
+const storage_delivery_proof = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    allowedFormats: ['jpg', 'png'],
+    params: {
+        folder: 'sneakerapp/deliveryProof'
+    }
+});
+
+const storage_review = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    allowedFormats: ['jpg', 'png'],
+    params: {
+        folder: 'sneakerapp/review'
+    }
+});
+
 exports.uploadCloudBrand = multer({ storage: storage_brand });
 exports.uploadCloudEmployee = multer({ storage: storage_employee });
 exports.uploadCloudProduct = multer({ storage: storage_product });
+exports.uploadCloudDeliveryProof = multer({ storage: storage_delivery_proof });
+exports.uploadCloudReview = multer({ storage: storage_review });

@@ -1,11 +1,12 @@
 import { ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
 
-function AccordionFilter({ children, summary }) {
+function AccordionFilter({ children, summary, expanded }) {
     return (
         <Accordion 
             square
             elevation={0} 
+            expanded={expanded}
             disableGutters
             sx={{ 
                 borderBottom: '1px solid', 
@@ -14,9 +15,9 @@ function AccordionFilter({ children, summary }) {
             }} 
         >
             <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography textTransform='uppercase' fontWeight={500}>{summary}</Typography>
+                <Box textTransform='uppercase' fontWeight={500} flexGrow={1}>{summary}</Box>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails sx={{ pt: 0 }}>
                 {children}
             </AccordionDetails>
         </Accordion>

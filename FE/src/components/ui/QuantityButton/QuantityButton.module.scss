@@ -1,0 +1,25 @@
+.quantity-button-container {
+    display: flex;
+
+    & button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #d3d7da;
+        background-color: transparent;
+        border-radius: unset;
+        min-width: fit-content;
+        outline: none;
+        padding: 2px;
+        cursor: pointer;
+    }
+
+    & input {
+        font-size: 16px;
+        width: 40px;
+        margin: 0 -0.69px 0 -0.69px;
+        text-align: center;
+        border: 1px solid #d3d7da;
+        outline: none;
+    }
+}

@@ -38,11 +38,31 @@ export const BREADCRUMB_ADMIN_VOUCHER = [
     {label: 'Phiếu giảm giá', link: '/admin/voucher'},
 ]
 
+export const BREADCRUMB_ADMIN_ORDER = [
+    {label: 'Dashboard', link: '/admin'},
+    {label: 'Đơn hàng', link: '/admin/order'},
+]
+
 export const BREADCRUMB_ADMIN_PROFILE = [
     {label: 'Dashboard', link: '/admin'},
+]
+
+export const BREADCRUMB_ADMIN_REVIEW = [
+    {label: 'Dashboard', link: '/admin'},
+    {label: 'Đánh giá sản phẩm', link: '/admin/review'},
 ]
 
 export const BREADCRUMB_CUSTOMER_PRODUCT = [
     {label: 'Trang chủ', link: '/'},
     {label: 'Sản phẩm', link: '/product'},
+]
+
+export const BREADCRUMB_CUSTOMER_CART = [
+    {label: 'Trang chủ', link: '/'},
+    {label: 'Giỏ hàng', link: '/cart'},
+]
+
+export const BREADCRUMB_CUSTOMER_ORDER = [
+    {label: 'Trang chủ', link: '/'},
+    {label: 'Đơn hàng của tôi', link: '/order'},
 ]

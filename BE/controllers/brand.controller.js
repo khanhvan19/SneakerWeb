@@ -71,7 +71,7 @@ exports.updateOneBrand = async (req, res, next) => {
 exports.deleteOneBrand = async (req, res, next) => {
     try {
         const current = await Brand.findById(req.params.id)
-        if(current) { cloudinary.uploader.destroy(current?.logoPath) };
+        if(current) cloudinary.uploader.destroy(current?.logo.path);
         await Brand.findByIdAndDelete(req.params.id, {new: true});
         res.status(200).json({
             message: "Xóa thành công một thương hiệu!"

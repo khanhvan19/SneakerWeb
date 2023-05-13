@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AgeFromDateString } from "age-calculator";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import Grid from '@mui/material/Unstable_Grid2';
 import { 
@@ -68,9 +68,6 @@ function CustomerScreen() {
         .catch((err) => { console.log(err)})
     // eslint-disable-next-line
     }, [refresh])
-
-    console.log(list);
-
 
     const handleToggleLockAccount = (id, status) => {
         if(checkPermission("P6_3") === true) {
@@ -259,7 +256,6 @@ function CustomerScreen() {
                     />
                 </Box>
             </Paper>
-            <ToastContainer />
 
             <Dialog 
                 open={dialog.show} 

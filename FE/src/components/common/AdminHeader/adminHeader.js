@@ -23,7 +23,7 @@ import {
 
 import * as constantsStyle from 'assets/styles/constantsStyle'
 
-import { handleEmployeeLogout } from "redux/slices/auth.slice";
+import { handleEmployeeLogout } from "redux/slices/employeeAuth.slice";
 import { toggleAdminMode } from "redux/slices/theme.slices";
 
 import styles from "./Header.module.scss";
@@ -61,7 +61,7 @@ function AdminHeader() {
             sx={{ bgcolor: "background.glass" }}
         >
             <Box className={cx("adheader-container")} sx={{px: 2}}>
-                <Box sx={{ mx: 2 }}>    
+                {/* <Box sx={{ mx: 2 }}>    
                     <Tooltip title="Thông báo" arrow>
                         <IconButton
                             onClick={(e) => setBtnNotify(e.currentTarget)}
@@ -86,7 +86,7 @@ function AdminHeader() {
                             chua viet
                         </MenuItem>
                     </Menu>
-                </Box>
+                </Box> */}
                 
                 <Box sx={{ mr: 2 }}>
                     <Tooltip title="Giao diện sáng" arrow>

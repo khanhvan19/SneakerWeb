@@ -25,7 +25,6 @@ import FilterDrawer from './filterDrawer';
 import { BREADCRUMB_CUSTOMER_PRODUCT } from 'constants/breadcrumb';
 import { SORT_OPTION } from 'constants/optionSelectField';
 
-
 function ProductList() {
     const filterRef = useRef();
     const location = useLocation();
@@ -33,8 +32,9 @@ function ProductList() {
 
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState();
+    const [titlePage, setTitlePage] = useState([])
 
-    var totalPages = Math.ceil(pagination?.total / pagination?.limit)
+    var totalPages = Math.ceil(pagination?.total / pagination?.limit);
 
     const queryParams = useMemo(() => {
         const params = queryString.parse(location.search)
@@ -42,31 +42,59 @@ function ProductList() {
             ...params,
             page: parseInt(params.page) || 1,
             limit: parseInt(params.limit) || 10,
+            sort: params.sort || SORT_OPTION[0].value,
         }
     }, [location.search])
 
     useEffect(() => {
+        var title = [];
         axiosPublic
-            .post('/sample/search', queryParams)
+            .post('/product/search', queryParams)
             .then((res) => {
-                console.log(res);
                 setProducts(res.data)
                 setPagination(res.pagination)
+                if(res.category) title.push(res.category);
+                if(res.brand) title.push(res.brand)
             })
             .catch((err) => console.log(err))
+
+        setTitlePage(title)
     }, [queryParams])
+
+    const updateURL = (searchParams) => {
+        navigate({
+            pathname: location.pathname,
+            search: queryString.stringify(searchParams)
+        })
+    }
 
     const handlePageChange = (e, newValue) => {
         const filter = { ...queryParams, page: newValue }
-        navigate({
-            pathname: location.pathname,
-            search: queryString.stringify(filter)
-        })
+        updateURL(filter);
     };
 
     const handleSortChange = (e) => {
-        // const filter = { ...queryParams, sort: }
-        console.log(e.target.value);
+        const filter = { ...queryParams, sort: e.target.value, page: 1 };
+        updateURL(filter);
+    }
+
+    const handleFilterDrawerChange = (newFilter) => {
+        const filter = { ...queryParams, ...newFilter, page: 1 };
+        updateURL(filter);
+    }
+    
+    const handleFilterChipChange = (newFilter) => {
+        const filter = { ...newFilter, page: 1 };
+        updateURL(filter);
+    }
+
+    const handleResetFilter = () => {
+        const filter = { 
+            page: 1,
+            limit: queryParams.limit,
+            sort: queryParams.sort,
+        }
+        updateURL(filter)
     }
 
     return (  
@@ -78,8 +106,23 @@ function ProductList() {
                 /> 
             </Box>
             <Box mt={2} mb={2.5} className='content-center-between'>
-                <Box>
-                    <Typography variant='h5' textTransform='uppercase'>Tất cả sản phẩm</Typography>
+                <Box className='content-bottom-center'>
+                    {(titlePage.length === 0) 
+                        ?   <Typography variant='h4' textTransform='uppercase' fontStyle='italic'>
+                                Tất cả sản phẩm
+                            </Typography>
+                        :   <Typography variant='h4' textTransform='uppercase' fontStyle='italic'>
+                                {titlePage.map((item, idx) => (
+                                    <Box key={idx} component='span'>
+                                        {item}
+                                        {(idx !== titlePage.length - 1) && (
+                                            <Box component='span' px={1}>•</Box>
+                                        )}
+                                    </Box>
+                                ))}
+                            </Typography>
+                    }      
+                    <Typography variant='h6' fontWeight={400} ml={2}>[{products.length}]</Typography>                    
                 </Box>
                 <Box>
                     <Button 
@@ -94,13 +137,13 @@ function ProductList() {
                     <TextField
                         select
                         size="small"
-                        defaultValue="new"
+                        value={queryParams.sort}
                         sx={{ "& fieldset": { border: 'none' } }}
                         SelectProps={{ 
                             sx: { fontWeight: 500 },
                             startAdornment: (
                                 <InputAdornment position="end" sx={{ mr: 1 }}>
-                                    Sort By: 
+                                    Sort By:
                                 </InputAdornment>
                             ),
                         }}
@@ -115,23 +158,18 @@ function ProductList() {
                 </Box>
             </Box>
             <Grid container spacing={2} columns={16}>
-                {products && products
-                    .filter(item => item.products.length !== 0)
-                    .map((item, idx) => (
-                        <Grid xs={4} key={idx}>
-                            <ProductCard data={item}/>
-                        </Grid>
-                    ))
-                }
+                {products && products.map((item, idx) => (
+                    <Grid xs={4} key={idx}>
+                        <ProductCard data={item} />
+                    </Grid>
+                ))}
             </Grid>
-            <Box className='content-center'>
-                {pagination && (
+            {(pagination && totalPages > 1) && (
+                <Box className='content-center' pt={3} pb={2}>
                     <Pagination 
-                        size="large"
-                        showLastButton
-                        showFirstButton
-                        count={totalPages} 
-                        page={pagination.page} 
+                        size='large' color='btnDark'
+                        showFirstButton showLastButton
+                        count={totalPages} page={pagination.page} 
                         onChange={handlePageChange} 
                         renderItem={(item) => (
                             <PaginationItem 
@@ -141,10 +179,16 @@ function ProductList() {
                             />
                         )}
                     />
-                )}
-            </Box>
+                </Box>
+            )}
 
-            <FilterDrawer ref={filterRef}/>
+            <FilterDrawer 
+                ref={filterRef} 
+                filters={queryParams} 
+                onChange={handleFilterDrawerChange} 
+                onChipChange={handleFilterChipChange}
+                onResetFilter={handleResetFilter}
+            />
         </>
     );
 }

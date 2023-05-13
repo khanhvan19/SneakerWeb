@@ -6,16 +6,22 @@ const lightThemeColor = {
         primary: "#212b36",
         secondary: "#637381",
         disabled: "#919eabe6",
-        accent: "#00ab55"
+        accent: "#00ab55",
+        error: '#ff5630',
+        success: '#00ab55',
+        warning: '#ffab00',
+        info: '#0060ff',
     },
     divider: "#919eab99",
     background: {
         paper: "#fff",
         default: "#fff",
+        secondary: "#63738180",
+        deepest: "#eef2f6",
         highlight: "#f4f6f8",
         accent: "#00ab5514",
         glass: "#ffffffcc",
-        glass2: "#20212499"
+        glass2: "#20212499",
     },
 }
 
@@ -24,12 +30,17 @@ const darkThemeColor = {
         primary: "#fff",
         secondary: "#919eab",
         disabled: "#919eab80",
-        accent: "#5be584"
+        accent: "#5be584",
+        error: '#ff5630',
+        success: '#00ab55',
+        warning: '#ffab00',
+        info: '#0060ff',
     },
     divider: "#919eab66",
     background: {
         paper: "#212b36",
         default: "#161c24",
+        secondary: "#919eab80",
         highlight: "#919eab29",
         accent: "#00ab5529",
         glass: "#161c24cc",
@@ -169,7 +180,7 @@ function Theme({ children, mode }) {
                         backgroundImage: 'none'
                     }
                 }
-            }
+            },
         },
     }), [mode])
 

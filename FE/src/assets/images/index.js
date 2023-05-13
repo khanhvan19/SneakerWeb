@@ -1,3 +1,25 @@
 export {default as logoLight} from './logo-main-light.png'
 export {default as logoDark} from './logo-main-dark.png'
 export {default as noImage} from './no-image.png'
+
+export {default as deliveryTruck} from './delivery-truck.png'
+export {default as trees} from './trees.png'
+
+export {default as CODPayment} from './payment/cod.png'
+export {default as PaypalPayment} from './payment/paypal.png'
+
+export {default as nikeBanner} from './banner/banner-nike.png'
+export {default as adidasBanner} from './banner/banner-adidas.png'
+export {default as pumaBanner} from './banner/banner-puma.png'
+export {default as reebokBanner} from './banner/banner-rebook.png'
+export {default as converseBanner} from './banner/converse-banner.png'
+export {default as vansBanner} from './banner/banner-vans.png'
+export {default as filaBanner} from './banner/fila-banner.png'
+
+export {default as nikeLogo} from './brand/nike.png'
+export {default as adidasLogo} from './brand/adidas.png'
+export {default as pumaLogo} from './brand/puma.png'
+export {default as reebokLogo} from './brand/reebok.png'
+export {default as converseLogo} from './brand/converse.png'
+export {default as vansLogo} from './brand/vans.png'
+export {default as filaLogo} from './brand/fila.png'

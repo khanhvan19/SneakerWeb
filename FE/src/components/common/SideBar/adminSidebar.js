@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { 
-    Accordion, 
-    AccordionDetails, 
-    AccordionSummary, 
-    Avatar, 
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Avatar,
     Box,
     Button,
     Card,
@@ -34,20 +34,24 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 const SIDEBAR_CONTENT = [
-    {icon: <Speed />, name: "Dashboard", link: '/admin'},
-    {icon: <CategoryOutlined />, name: "Danh mục", child: [
-        {name: "Danh mục", link: '/admin/category', permit: 'P1_1'},
-        {name: "Thương hiệu", link: '/admin/brand', permit: 'P2_1'}
-    ]},
-    {icon: <Inventory2Outlined />, name: "Sản phẩm", child: [
-        {name: "Mẫu sản phẩm", link: '/admin/product-sample', permit: 'P3_1'},
-        {name: "Sản phẩm", link: '/admin/product', permit: 'P4_1'}
-    ]},
-    {icon: <LocalMallOutlined />, name: "Đơn hàng", link: '/admin', permit: 'P5_1'},
-    {icon: <PeopleAltOutlined />, name: "Khách hàng", link: '/admin/customer', permit: 'P6_1'},
-    {icon: <BadgeOutlined />, name: "Nhân viên", link: '/admin/employee', permit: 'P7_1'},
-    {icon: <ReceiptLongOutlined />, name: "Nhập hàng", link: '/admin/import', permit: 'P8_1'},
-    {icon: <ConfirmationNumberOutlined />, name: "Phiếu giảm giá", link: '/admin/voucher', permit: 'P9_1'},
+    { icon: <Speed />, name: "Dashboard", link: '/admin/' },
+    {
+        icon: <CategoryOutlined />, name: "Danh mục", child: [
+            { name: "Danh mục", link: '/admin/category', permit: 'P1_1' },
+            { name: "Thương hiệu", link: '/admin/brand', permit: 'P2_1' }
+        ]
+    },
+    {
+        icon: <Inventory2Outlined />, name: "Sản phẩm", child: [
+            { name: "Sản phẩm", link: '/admin/product', permit: 'P4_1' },
+            { name: "Đánh giá", link: '/admin/review', permit: 'P4_1' },
+        ]
+    },
+    { icon: <LocalMallOutlined />, name: "Đơn hàng", link: '/admin/order', permit: 'P5_1' },
+    { icon: <PeopleAltOutlined />, name: "Khách hàng", link: '/admin/customer', permit: 'P6_1' },
+    { icon: <BadgeOutlined />, name: "Nhân viên", link: '/admin/employee', permit: 'P7_1' },
+    { icon: <ReceiptLongOutlined />, name: "Nhập hàng", link: '/admin/import', permit: 'P8_1' },
+    // { icon: <ConfirmationNumberOutlined />, name: "Phiếu giảm giá", link: '/admin/voucher', permit: 'P9_1' },
 ];
 
 const CustomButton = styled(Button)(({ theme }) => ({
@@ -77,17 +81,15 @@ function AdminSidebar() {
     const mode = useSelector((state) => state.theme?.adminMode);
     const employee = useSelector((state) => state.auth.login?.data);
     const [expanded, setExpanded] = useState(false);
-    const [active, setActive] = useState({ parent: "p0", children: "" })
-    var navigate = useNavigate();
 
-    const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
+    const handleChange = (index) => (e, isExpanded) => {
+        setExpanded(isExpanded ? index : false);
     };
 
     const checkDisabled = (permit) => {
-        if(permit === undefined) return false;
-        if(employee?.permissions[permit] === false 
-        || employee?.permissions[permit] === undefined ) {
+        if (permit === undefined) return false;
+        if (employee?.permissions[permit] === false
+            || employee?.permissions[permit] === undefined) {
             return true;
         }
         return false;
@@ -96,84 +98,82 @@ function AdminSidebar() {
     return (
         <Box className={cx('adsidebar-wrapper')} sx={{ borderColor: 'divider' }}>
             <Box className={cx('adsidebar-container', 'custom-scrollbar')}>
-                <Typography align="center" mb={2}> 
-                    <img 
-                        src={(mode === 'light') ? image.logoLight : image.logoDark} 
-                        height='50' alt="LOGO" 
+                <Typography align="center" mb={2}>
+                    <img
+                        src={(mode === 'light') ? image.logoLight : image.logoDark}
+                        height='50' alt="LOGO"
                     />
                 </Typography>
-                <Card 
+                <Card
                     elevation={0}
-                    sx={{ 
-                        mb: 2, 
-                        display: 'flex', 
-                        alignItems: 'center',
+                    sx={{
+                        mb: 2, display: 'flex', alignItems: 'center',
                         bgcolor: "background.highlight",
                     }}
                 >
                     <CardContent>
-                        <Avatar src={employee?.avatar?.link}  alt='' />
+                        <Avatar src={employee?.avatar?.link || "/"} alt={employee?.name} />
                     </CardContent>
-                    <CardContent 
-                        sx={{ 
-                            flex: 1, px: 0, 
-                            '&:last-child' : {pb: '16px'}
-                        }}
-                    >
+                    <CardContent sx={{ flex: 1, px: 0, '&:last-child': { pb: '16px' } }}>
                         <Typography variant="subtitle2">{employee?.name}</Typography>
                         <Typography variant="caption" color='text.secondary'>{employee?.email}</Typography>
                     </CardContent>
                 </Card>
 
                 <Box className={cx('adsidebar-content')}>
-                    {SIDEBAR_CONTENT.map((item, idx) => (    
-                        <Accordion 
-                            key={idx}
-                            disableGutters
-                            expanded={expanded === `p${idx}`} 
-                            onChange={handleChange(`p${idx}`)}
-                        >     
-                            <CustomButton
-                                component={AccordionSummary}
-                                expandIcon={item.child && <ExpandMore />}
-                                startIcon={item.icon}
-                                disabled={ checkDisabled(item?.permit) }
-                                onClick={() => {
-                                    navigate(item?.link)
-                                    setActive({ parent: `p${idx}`, children: ""})
-                                }}
-                                sx={{ 
-                                    px: 2, fontSize: '16px',
-                                    fontWeight: (active.parent === `p${idx}`) ? 600 : 400,
-                                    color: (active.parent ===  `p${idx}`) 
-                                        ? 'text.accent' 
-                                        : 'text.primary',
-                                    bgcolor: (active.parent ===  `p${idx}`) 
-                                        ? 'background.accent' 
-                                        : 'transparent',
-                                }}
-                            > 
-                                {item.name}
-                            </CustomButton> 
-                            {item.child && (
-                                <AccordionDetails sx={{ py: 1, px: 0 }} >
-                                    {item.child.map((child, i) => ( 
+                    {SIDEBAR_CONTENT.map((item, idx) => (
+                        <Accordion
+                            key={idx} disableGutters
+                            expanded={expanded === idx}
+                            onChange={handleChange(idx)}
+                        >
+                            {(item.link) ? (
+                                <CustomButton
+                                    startIcon={item.icon}
+                                    component={NavLink} to={item.link}
+                                    onClick={handleChange(idx)}
+                                    sx={{ 
+                                        px: 2, py: 1.5, fontSize: '16px',
+                                        '&.active': {
+                                            fontWeight: 600,
+                                            color: 'text.accent',
+                                            bgcolor: 'background.accent',
+                                        }
+                                    }}
+                                >
+                                    {item.name}
+                                </CustomButton>
+                            ) : (
+                                <CustomButton
+                                    startIcon={item.icon}
+                                    component={AccordionSummary} 
+                                    expandIcon={<ExpandMore />}
+                                    sx={{ 
+                                        px: 2, fontSize: '16px', 
+                                        ':has(+* .active)': {
+                                            fontWeight: 600,
+                                            color: 'text.accent',
+                                            bgcolor: 'background.accent',
+                                        }
+                                    }}
+                                >
+                                    {item.name}
+                                </CustomButton>
+                            )}  
+                            
+                            {(item.child) && (
+                                <AccordionDetails sx={{ p: 0, pb: 0.5 }} >
+                                    {item.child.map((child, i) => (
                                         <CustomButton
                                             key={i}
-                                            startIcon={<ArrowRight/>}
-                                            fullWidth
-                                            component={Link}
-                                            to={child.link} 
-                                            disabled={ checkDisabled(child?.permit) }
-                                            onClick={() => setActive(prev =>
-                                                ({...prev, children: `c${i}`})
-                                            )}
+                                            component={NavLink} to={child.link}
+                                            fullWidth startIcon={<ArrowRight />}
                                             sx={{ 
-                                                pl: 3, py: 1, mb: 0.5,
-                                                fontWeight: (active.children === `c${i}`) ? 600 : 400,
-                                                color: (active.children ===  `c${i}`) 
-                                                    ? 'text.accent' 
-                                                    : 'text.primary',
+                                                pl: 3, py: 1, mb: 0.5, 
+                                                '&.active': {
+                                                    fontWeight: 600,
+                                                    color: 'text.accent',
+                                                }
                                             }}
                                         >
                                             {child.name}
@@ -181,8 +181,9 @@ function AdminSidebar() {
                                     ))}
                                 </AccordionDetails>
                             )}
+
                         </Accordion>
-                    ))}
+                    ))}   
                 </Box>
             </Box>
         </Box>

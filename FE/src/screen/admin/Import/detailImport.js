@@ -1,5 +1,5 @@
 import { ArrowBackOutlined } from "@mui/icons-material";
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Paper, Table, TableBody, TableContainer, TableFooter, TableHead, TableRow, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { TableCellBorder } from "assets/styles/constantsStyle";
 import { ROLE_OPTION, SIZE_OPTION } from "constants/optionSelectField";
@@ -81,8 +81,8 @@ function DetailImport() {
                             <TableHead>
                                 <TableRow>
                                     <TableCellBorder align="center">STT</TableCellBorder>
-                                    <TableCellBorder align="center">Tên sản phẩm</TableCellBorder>
-                                    <TableCellBorder align="center">Màu sắc</TableCellBorder>
+                                    <TableCellBorder align="center">Sản phẩm</TableCellBorder>
+                                    <TableCellBorder align="center">Phiên bản</TableCellBorder>
                                     <TableCellBorder align="center">Size</TableCellBorder>
                                     <TableCellBorder align="center">Số lượng</TableCellBorder>
                                     <TableCellBorder align="center">Đơn giá</TableCellBorder>
@@ -90,19 +90,19 @@ function DetailImport() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {detail?.products?.map(product => 
-                                    product.sizes.map((size) => {
+                                {detail?.products?.map(element => 
+                                    element?.detail?.map(item => {
                                         index += 1;
-                                        countQuantity += size.quantity;
+                                        countQuantity += item.quantity;
                                         return (
                                             <TableRow key={index}>
                                                 <TableCellBorder align="center">{index}</TableCellBorder>
-                                                <TableCellBorder align="left">{product?.product?.sample?.name}</TableCellBorder>
-                                                <TableCellBorder align="left">{product?.product?.colorName}</TableCellBorder>
-                                                <TableCellBorder align="center">{findLabelSize(size.code)}</TableCellBorder>
-                                                <TableCellBorder align="center">{size.quantity}</TableCellBorder>
-                                                <TableCellBorder align="right">{formatMoney(product.price)}</TableCellBorder>
-                                                <TableCellBorder align="right">{formatMoney(product.price * size.quantity)}</TableCellBorder>
+                                                <TableCellBorder align="left">{element?.product?.name}</TableCellBorder>
+                                                <TableCellBorder align="left">{item?.version?.name}</TableCellBorder>
+                                                <TableCellBorder align="center">{findLabelSize(item.size)}</TableCellBorder>
+                                                <TableCellBorder align="center">{item.quantity}</TableCellBorder>
+                                                <TableCellBorder align="right">{formatMoney(element.price)}</TableCellBorder>
+                                                <TableCellBorder align="right">{formatMoney(element.price * item.quantity)}</TableCellBorder>
                                             </TableRow>
                                         );
                                     })

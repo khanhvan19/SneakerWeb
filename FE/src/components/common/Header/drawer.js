@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { forwardRef, memo, useImperativeHandle, useState } from "react";
 import { Button, Drawer, IconButton, List, ListItem, ListItemButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import queryString from 'query-string';
 
 function HeaderDrawer({arrData = []}, ref) {
     const [open, setOpen] = useState(false);
@@ -19,9 +20,9 @@ function HeaderDrawer({arrData = []}, ref) {
         setTitle([]);
     }
 
-    const handleOpenChildLevel = (name, slug) => {
+    const handleOpenChildLevel = (name, id) => {
         setLevel(prev => prev + 1);
-        setTitle(prev => prev.concat({name: name, slug: slug}));
+        setTitle(prev => prev.concat({name: name, id: id}));
     }
     
     const handleExitLevel = () => {
@@ -59,7 +60,7 @@ function HeaderDrawer({arrData = []}, ref) {
                         secondaryAction={(level !== arrData.length - 1) &&
                             <IconButton 
                                 size="large" 
-                                onClick={() => handleOpenChildLevel(item.name, item.slug)}
+                                onClick={() => handleOpenChildLevel(item.name, item._id)}
                             >
                                 <ChevronRight />
                             </IconButton>
@@ -71,8 +72,14 @@ function HeaderDrawer({arrData = []}, ref) {
                                 fontWeight: level === 0 ? 600 : 500, 
                             }}
                             onClick={() => {(level === 0)
-                                ? navigate(`product/${item?.slug}`)
-                                : navigate(`product/${title[title.length-1]?.slug}/${item?.slug}`)
+                                ? navigate({
+                                    pathname: '/product/',
+                                    search: queryString.stringify({ category: item?._id })
+                                })
+                                : navigate({
+                                    pathname: '/product/',
+                                    search: queryString.stringify({ category: title[title.length-1]?.id, brand: item?._id })
+                                })
                             }}
                         >
                             {item.name}

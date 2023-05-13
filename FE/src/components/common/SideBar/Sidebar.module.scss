@@ -27,3 +27,15 @@
         }
     }
 }
+
+.client-sidebar-container {
+    width: 256px;
+    margin-right: 24px;
+
+    & .client-sidebar-menu {
+        & a[aria-current] {
+            font-weight: 600 !important;
+            background-color: #ebebf0;
+        }
+    }
+}

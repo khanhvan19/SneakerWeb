@@ -123,8 +123,8 @@ function AddEditForm({ isProfile, isAddMode, initValue, onSubmit }) {
                                 </Paper>
                             </Grid>
                             <Grid xs={8}>
-                                <Paper sx={{ backgroundImage: "none" }} elevation={4}>
-                                    <Grid container m={0}>
+                                <Paper sx={{ backgroundImage: "none", p: 2 }} elevation={4}>
+                                    <Grid container spacing={2}>
                                         <Grid xs={6}>
                                             <FastField
                                                 name="name"

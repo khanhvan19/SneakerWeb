@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import queryString from 'query-string';
 
 import { 
     AppBar, 
+    Badge, 
     Box, 
     Button, 
     Container, 
@@ -23,32 +25,62 @@ import {
 import HideOnScroll from 'components/ui/hideOnScroll';
 import * as image from 'assets/images'
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ButtonNav } from 'assets/styles/constantsStyle';
-import HoverMenu from 'components/ui/hoverMenu';
+import HoverMenu from 'components/ui/Menu/hoverMenu';
 import HeaderDrawer from './drawer';
 import SearchDialog from './searchDialog';
 import axiosPublic from 'utils/axiosPublic';
+import ClickMenu from 'components/ui/Menu/clickMenu';
+import { handleCustomerLogout } from 'redux/slices/clientAuth.slice';
+import { updateTotalCart } from 'redux/slices/cart.slice';
+import { updateFavorite } from 'redux/slices/favorite.slice';
 
 function Header(props) {
-    const loginData = useSelector((state) => state.auth?.login?.data);
+    const isLogin = useSelector((state) => state.client?.login?.data);
+    var cartCount = useSelector((state) => state.cart?.totalCart);
+    var favorites = useSelector((state) => state.favorite?.favorites);
     const [brands, setBrands] = useState([]);
     const [categorys, setCategorys] = useState([]);
     const searchRef = useRef();
     const navMenuRef = useRef();
     const navDrawerRef = useRef();
+    const accountMenuRef = useRef();
     var navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         axiosPublic
-            .get("category/public", { headers: { token: loginData?.accessToken} })
+            .get("category/public")
             .then((res) => { setCategorys(res) })
             .catch((err) => { console.log(err) });
         axiosPublic
-            .get("brand/public", { headers: { token: loginData?.accessToken} })
+            .get("brand/public")
             .then((res) => { setBrands(res) })
             .catch((err) => { console.log(err) });
-    }, [loginData])
+    }, [])
+
+    const handleLogout = () => {
+        dispatch(handleCustomerLogout(isLogin?._id))
+            .unwrap()
+            .then((res) => {
+                dispatch(updateTotalCart(0))
+                dispatch(updateFavorite([]))
+                navigate("/login");
+            })
+    }
+
+    var accountMenuItems = (!isLogin) 
+        ? [
+            {label: 'Đăng nhập', link: '/login'},
+            {label: 'Đăng ký tài khoản', link: '/register'},
+        ] 
+        : [
+            {label: 'Hồ sơ của tôi', link: '/my-account'},
+            {label: 'Danh sách địa chỉ', link: '/address'},
+            {label: 'Đổi mật khẩu', link: '/reset-password', divider: true},
+            {label: 'Đăng xuất', action: handleLogout},
+        ];
 
     return ( 
         <>
@@ -66,6 +98,7 @@ function Header(props) {
                         <Typography 
                             to="/cooperation" component={Link}
                             fontSize="small" fontWeight={600}
+                            sx={{ '&:hover': {textDecoration: 'underline'} }}
                         >
                             Liên hệ hợp tác
                         </Typography>
@@ -74,20 +107,35 @@ function Header(props) {
                         <Typography 
                             to="/help" component={Link}
                             fontSize="small" fontWeight={600} 
+                            sx={{ '&:hover': {textDecoration: 'underline'} }}
                         >
                             Trợ giúp
                         </Typography>
                         <Divider orientation="vertical" flexItem sx={{ mx: 1, borderWidth: 1 }} />
                         <Typography 
-                            to="/order" component={Link}
+                            component={Link} to={isLogin ? "/order" : "/login"} 
                             fontSize="small" fontWeight={600}
+                            sx={{ '&:hover': {textDecoration: 'underline'} }}
                         >
                             Theo dõi đơn hàng
                         </Typography>
                         <Divider orientation="vertical" flexItem sx={{ mx: 1, borderWidth: 1 }} />
-                        <Typography fontSize="small" fontWeight={600}>
-                            Hi! {loginData?.name}
-                        </Typography>
+                        {isLogin 
+                            ? (
+                                <Typography fontSize="small" fontWeight={600}>
+                                    Hi! {isLogin?.name}
+                                </Typography>
+                            )
+                            : (
+                                <Typography 
+                                    to="/login" component={Link}
+                                    fontSize="small" fontWeight={600}
+                                    sx={{ '&:hover': {textDecoration: 'underline'} }}
+                                >
+                                    Đăng nhập
+                                </Typography>
+                            )
+                        }
                     </Box>
                 </Box>
             </Container>
@@ -121,15 +169,21 @@ function Header(props) {
                                             disableFocusRipple : true,           
                                         }}
                                         sx={{ mx: {xs: 0, md: 0.5, lg: 1 } }} 
-                                        onClick={() => navigate(`product/${category?.slug}`)}
+                                        onClick={() => navigate({
+                                            pathname: '/product/',
+                                            search: queryString.stringify({ category: category._id })
+                                        })}
                                     >
                                         {brands?.map((brand, i) => (
                                             <MenuItem
                                                 key={i}
                                                 sx={{ width: 240, textTransform: 'uppercase' }}
                                                 onClick={() => {
-                                                    navMenuRef.current.onCloseMenu()
-                                                    navigate(`product/${category?.slug}/${brand?.slug}`)
+                                                    navMenuRef.current.onCloseMenu();
+                                                    navigate({
+                                                        pathname: '/product/',
+                                                        search: queryString.stringify({ category: category._id, brand: brand._id })
+                                                    })
                                                 }}
                                             >
                                                 {brand.name}
@@ -186,28 +240,53 @@ function Header(props) {
                                 >
                                     <Typography variant="caption" pr={{ md: 2.5, lg: 5 }}>Bạn cần tìm gì...</Typography> 
                                 </Button>
-                                <Tooltip arrow title="Tài khoản">
-                                    <IconButton>
+                                <ClickMenu 
+                                    ref={accountMenuRef}
+                                    button={IconButton}
+                                    buttonChildren={
                                         <AccountCircleOutlined 
-                                            sx={{ color: 'text.primary', fontSize: { sm: '1.75rem' }}} 
+                                            sx={{ color: 'text.primary', fontSize: { sm: '1.75rem' } }} 
                                         />
-                                    </IconButton>
-                                </Tooltip>
+                                    }
+                                    tooltipTitle="Tài khoản"
+                                >
+                                    {accountMenuItems.map((item, idx) => (
+                                        <MenuItem
+                                            key={idx}
+                                            divider={item.divider}
+                                            onClick={() => {
+                                                if(item.link) navigate(item.link);
+                                                else item.action();
+                                                accountMenuRef.current.onCloseMenu();
+                                            }}
+                                        >
+                                            {item.label}
+                                        </MenuItem>
+                                    ))}
+                                </ClickMenu>
                                 <Tooltip arrow title="Yêu thích">
-                                    <IconButton>
-                                        <FavoriteBorderOutlined 
-                                            sx={{ color: 'text.primary', fontSize: {sm: '1.75rem' }}} 
-                                        />
+                                    <IconButton 
+                                        component={Link} to={isLogin ? "/my-favorite" : "/login"} 
+                                    >
+                                        <Badge color="error" badgeContent={favorites?.length}>
+                                            <FavoriteBorderOutlined 
+                                                sx={{ color: 'text.primary', fontSize: {sm: '1.75rem' } }} 
+                                            />
+                                        </Badge>
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip arrow title="Giỏ hàng">
-                                    <IconButton edge='end'>
-                                        <LocalMallOutlined 
-                                            sx={{ color: 'text.primary', fontSize: { sm: '1.75rem' }}} 
-                                        />
-                                    </IconButton>
+                                        <IconButton 
+                                            edge='end' 
+                                            component={Link} to={isLogin ? "/cart" : "/login"} 
+                                        >
+                                            <Badge color="error" badgeContent={cartCount}>
+                                                <LocalMallOutlined 
+                                                    sx={{ color: 'text.primary', fontSize: { sm: '1.75rem' } }} 
+                                                />
+                                            </Badge>
+                                        </IconButton>
                                 </Tooltip>
-
                             </Box>
                         </Toolbar>
                     </Container>
@@ -217,7 +296,7 @@ function Header(props) {
             <HeaderDrawer ref={navDrawerRef} arrData={[categorys, brands]} />
             
             <SearchDialog ref={searchRef} />
-            
+
         </>
     );
 }

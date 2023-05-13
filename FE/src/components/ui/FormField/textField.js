@@ -4,7 +4,7 @@ import { FormControl, FormHelperText, InputAdornment, InputLabel, OutlinedInput 
 function TextField(props) {
     const {
         field, form,
-        type, label, disabled, endLabel, rows, size
+        type, label, disabled, endLabel, rows, size, placeholder, sx, startLabel
     } = props
 
     const { name, value, onChange, onBlur } = field;
@@ -34,7 +34,13 @@ function TextField(props) {
                 type={type}
                 rows={rows}
                 multiline={rows ? true : false}
-                sx={styleDateField}
+                sx={[styleDateField , {...sx}]}
+                placeholder={placeholder}
+                startAdornment={startLabel && 
+                    <InputAdornment position="start">
+                        {startLabel}
+                    </InputAdornment>
+                }
                 endAdornment={endLabel && 
                     <InputAdornment position="end">
                         {endLabel}

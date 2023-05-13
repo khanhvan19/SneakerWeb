@@ -35,8 +35,12 @@ const importSchema = new mongoose.Schema({
             type: Number,
             require: true
         },
-        sizes: [{
-            code: {
+        detail: [{
+            version: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'ProductVersions',
+            },
+            size: {
                 type: Number,
                 required: true,
             },

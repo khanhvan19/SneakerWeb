@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const { 
     fetchProvinces, 
     fetchDistricts, 
@@ -8,7 +7,7 @@ const {
 exports.getProvinces = async (req, res, next) => {
     try {
         const provinces = await fetchProvinces();
-        res.status(200).json(provinces)        
+        res.status(200).send(provinces)        
     } catch (err) {
         next(new Error())
     }

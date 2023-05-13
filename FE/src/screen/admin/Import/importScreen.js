@@ -50,8 +50,6 @@ function ImportScreen() {
     // eslint-disable-next-line
     }, [])
 
-    console.log(list);
-
     const handleRequestSort = (property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');

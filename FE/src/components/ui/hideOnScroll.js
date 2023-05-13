@@ -43,8 +43,9 @@ function HideOnScroll(props) {
         <Fade in={scrollTopTrigger}>
           <Tooltip title="Về đầu trang" arrow>
             <Box
+                zIndex={99}
                 onClick={handleScrollTop}
-                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                sx={{ position: 'fixed', bottom: 88, right: 42 }}
             >
                 <Fab size="small" color="btnGlassSuccess">
                     <KeyboardArrowUp />

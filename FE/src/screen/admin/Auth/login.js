@@ -23,7 +23,7 @@ import {
     Report,
 } from "@mui/icons-material";
 
-import { handleEmployeeLogin } from "redux/slices/auth.slice";
+import { handleEmployeeLogin } from "redux/slices/employeeAuth.slice";
 
 import styles from './Login.module.scss'
 import classNames from "classnames/bind";

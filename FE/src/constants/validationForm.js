@@ -126,24 +126,15 @@ export const ADD_EDIT_CATEGORY = Yup.object().shape({
 });
 
 export const ADD_EDIT_PRODUCT = Yup.object().shape({
-    imageOuter: Yup.mixed()
-        .required('Vui lòng chọn hình ảnh tải lên'),
-    imageInner: Yup.mixed()
-        .required('Vui lòng chọn hình ảnh tải lên'),
-    imageFront: Yup.mixed()
-        .required('Vui lòng chọn hình ảnh tải lên'),
-    imageBehind: Yup.mixed()
-        .required('Vui lòng chọn hình ảnh tải lên'),
-    imageAbove: Yup.mixed()
-        .required('Vui lòng chọn hình ảnh tải lên'),
-    imageUnder: Yup.mixed()
-        .required('Vui lòng chọn hình ảnh tải lên'),
-    sample: Yup.string()
-        .ensure()
-        .required("Vui lòng nhập vào trường này!"),
     name: Yup.string()
         .trim()
         .required("Vui lòng nhập vào trường này!"),
+    brand: Yup.string()
+        .ensure()
+        .required("Vui lòng chọn trường này!"),
+    category: Yup.array()
+        .ensure()
+        .min(1, "Vui lòng chọn ít nhất một danh mục!"),
     price: Yup.number()
         .integer("Giá bán phải là một số nguyên")
         .positive("Giá bán phải là số lớn hơn 0")
@@ -159,6 +150,27 @@ export const ADD_EDIT_PRODUCT = Yup.object().shape({
     sizeMax: Yup.number()
         .integer("Kích thước phải là một số nguyên")
         .required("Vui lòng chọn trường này!"),
+});
+
+export const ADD_EDIT_VERSION_PRODUCT = Yup.object().shape({
+    product: Yup.string()
+        .ensure()
+        .required("Vui lòng chọn trường này!"),
+    name: Yup.string()
+        .trim()
+        .required("Vui lòng nhập vào trường này!"),
+    imageOuter: Yup.mixed()
+        .required('Vui lòng chọn hình ảnh tải lên'),
+    imageInner: Yup.mixed()
+        .required('Vui lòng chọn hình ảnh tải lên'),
+    imageFront: Yup.mixed()
+        .required('Vui lòng chọn hình ảnh tải lên'),
+    imageBehind: Yup.mixed()
+        .required('Vui lòng chọn hình ảnh tải lên'),
+    imageAbove: Yup.mixed()
+        .required('Vui lòng chọn hình ảnh tải lên'),
+    imageUnder: Yup.mixed()
+        .required('Vui lòng chọn hình ảnh tải lên'),
 });
 
 export const ADD_EDIT_PRODUCT_SAMPLE = Yup.object().shape({
@@ -189,16 +201,19 @@ export const ADD_IMPORT = [
             .required("Vui lòng nhập vào trường này!"),
     }),
     Yup.object().shape({
-        products: Yup.array().of( Yup.object().shape({
+        products: Yup.array().of(Yup.object().shape({
             product: Yup.string()
                 .ensure()
                 .required("Vui lòng chọn trường này!"),
             price: Yup.number()
                 .integer("Giá nhập hàng phải là một số nguyên")
                 .positive("Giá nhập hàng phải là số lớn hơn 0")
-                .required("Vui lòng nhập vào trường này!"), 
-            sizes: Yup.array().of( Yup.object().shape({
-                code: Yup.string()
+                .required("Vui lòng nhập vào trường này!"),
+            detail: Yup.array().of(Yup.object().shape({
+                version: Yup.string()
+                    .ensure()
+                    .required("Vui lòng chọn trường này!"),
+                size: Yup.string()
                     .ensure()
                     .required("Vui lòng chọn trường này!"),
                 quantity: Yup.number()
@@ -270,3 +285,58 @@ export const ADD_EDIT_VOUCHER = Yup.object().shape({
     brandCondition: Yup.string(),
     description: Yup.string().trim(),
 })
+
+export const LOGIN = Yup.object().shape({
+    email: Yup.string()
+        .max(50, "Email có tối đa 50 ký tự!")
+        .email("Vui lòng nhập đúng định dạng của email")
+        .required("Vui lòng nhập vào trường này!"),
+    password: Yup.string()
+        .min(8, "Mật khẩu có tối thiểu 8 ký tự!")
+        .max(30, "Mật khẩu có tối đa 30 ký tự!")
+        .required("Vui lòng nhập vào trường này!"),
+});
+
+export const REGISTER = Yup.object().shape({
+    name: Yup.string()
+        .trim()
+        .required("Vui lòng nhập vào trường này!"),
+    email: Yup.string()
+        .max(50, "Email có tối đa 50 ký tự!")
+        .email("Vui lòng nhập đúng định dạng của email")
+        .required("Vui lòng nhập vào trường này!"),
+    password: Yup.string()
+        .min(8, "Mật khẩu có tối thiểu 8 ký tự!")
+        .max(30, "Mật khẩu có tối đa 30 ký tự!")
+        .required("Vui lòng nhập vào trường này!"),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password')], 'Nhập lại mật khẩu không trùng khớp!')
+        .required("Vui lòng nhập vào trường này!"),
+});
+
+export const ADD_EDIT_ADDRESS_CUSTOMER = Yup.object().shape({
+    name: Yup.string()
+        .trim()
+        .required("Vui lòng nhập vào trường này!"),
+    phone: Yup.string()
+        .trim()
+        .min(10, "Số điện thoại có tối thiểu 10 số")
+        .max(12, "Số điện thoại có tối đa 12 số")
+        .required("Vui lòng nhập vào trường này!"),
+    province: Yup.string()
+        .required("Vui lòng chọn trường này!"),
+    district: Yup.string()
+        .required("Vui lòng chọn trường này!"),
+    ward: Yup.string()
+        .required("Vui lòng chọn trường này!"),
+    addressDetail: Yup.string()
+        .trim()
+        .required("Vui lòng nhập vào trường này!"),
+});
+
+export const ADD_ITINERARY = Yup.object().shape({
+    title: Yup.string()
+        .required("Vui lòng chọn trường này!"),
+});
+
+

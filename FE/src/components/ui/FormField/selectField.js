@@ -4,7 +4,7 @@ import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/
 function SelectField(props) {
     const { 
         field, form,
-        options, label, disabled, size, onChangeOther
+        options, label, disabled, size, sx, onChangeOther
     } = props;
 
     const { name, value, onChange, onBlur } = field;
@@ -25,6 +25,7 @@ function SelectField(props) {
                 onBlur={onBlur}
                 onChange={(onChangeOther != null) ? onChangeOther : onChange}
                 disabled={disabled}
+                sx={sx}
             >
                 {options.map((item, idx) => (
                     <MenuItem key={idx} value={ item._id || item.value  }>

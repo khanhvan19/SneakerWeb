@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useSelector } from "react-redux";
 
 import {  
@@ -90,7 +90,6 @@ function EditCustomer() {
                 initValue={initValue}
                 onSubmit={handleSubmit}
             />
-            <ToastContainer />
         </>
     );
 }

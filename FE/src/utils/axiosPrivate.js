@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import store from "redux/store";
-import { handleRefreshToken } from "redux/slices/auth.slice";
+import { handleRefreshToken } from "redux/slices/employeeAuth.slice";
 
 const axiosPrivate = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,

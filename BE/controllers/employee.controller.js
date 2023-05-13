@@ -31,11 +31,11 @@ exports.create = async (req, res, next) => {
         }
         
         const provinceName = await regionName
-        .findProvinceName(req.body.province);
+            .findProvinceName(req.body.province);
         const districtName = await regionName
-        .findDistrictName(req.body.province, req.body.district);
+            .findDistrictName(req.body.province, req.body.district);
         const wardName = await regionName
-        .findWardName(req.body.district, req.body.ward);
+            .findWardName(req.body.district, req.body.ward);
         
         data = {
             ...req.body, 
@@ -92,12 +92,28 @@ exports.login = async (req, res, next) => {
     }
 }
 
-exports.logout =  async (req, res, next) => {
+exports.logout = async (req, res, next) => {
     try {
         res.clearCookie('refreshToken', {path: '/'});
         res.status(200).send("Đăng xuất thành công!" );
     } catch (err) {
         next(new Error("Đăng xuất thất bại!"))
+    }
+}
+
+exports.shipperLogin = async (req, res, next) => {
+    try {
+        const shipper = await Employee.findOne({ email: req.body.email });
+        if (!shipper || shipper.role !== 'role_4' ) {
+            return next(new NotFoundError("Không tìm thấy tài khoản của bạn!"));
+        }
+        const validPassword = await bcrypt.compareSync(req.body.password, shipper.password);
+        if (!validPassword) {
+            return next(new NotFoundError("Mật khẩu bạn nhập không chính xác!"));
+        }
+        res.status(200).send(shipper);
+    } catch (err) {
+        next(new Error());
     }
 }
 
@@ -169,18 +185,16 @@ exports.resetPassword = async (req, res, next) => {
 exports.changePassword = async (req, res, next) => {
     try { 
         const employee = await Employee.findById(req.params.id);
-        console.log(employee);
         const validPassword = await bcrypt.compareSync(req.body.currentPassword, employee.password);
-        console.log(validPassword);
         if (!validPassword) {
             return next(new NotFoundError("Nhập mật khẩu hiện tại không chính xác!"));
         }
 
         const hashPassword = await bcrypt.hash(req.body.newPassword, 10);
-        await Employee.findByIdAndUpdate(req.params.id, {password: hashPassword}, {new: true});
+        await Employee.findByIdAndUpdate(req.params.id, {password: hashPassword});
         res.status(200).json({message: "Đổi mật khẩu thành công!"});
     } catch (error) {
-        
+        next(new Error())
     }
 }
 
@@ -197,6 +211,19 @@ exports.getAllEmployees = async (req, res, next) => {
         res.status(200).send(newResult);
     } catch(err) {
         next(new Error());
+    }
+}
+
+exports.getEmployeeByRole = async (req, res, next) => {
+    try {
+        const employees = await Employee.find({
+            role: req.query.role,
+            status: true,
+        })
+
+        res.status(200).send(employees)
+    } catch (error) {
+        next(new Error())
     }
 }
 
@@ -217,7 +244,6 @@ exports.getOneEmployee = async (req, res, next) => {
 exports.updateInfoEmployee = async (req, res, next) => {
     const fileData = req.file;
     try{
-        console.log(req.body);
         if(fileData !== undefined) {
             const current = await Employee.findById(req.params.id);
             if(current) { cloudinary.uploader.destroy(current?.avatarPath) };
@@ -279,7 +305,6 @@ exports.toggleStatus = async (req, res, next) => {
             { status: !current.status },
             { new: true }
         )
-        console.log(result);
         res.status(200).json({
             message: `${(result.status === true) ? "Mở khóa tài khoản" : "Khóa tài khoản"} thành công`
         })
@@ -290,7 +315,6 @@ exports.toggleStatus = async (req, res, next) => {
 
 exports.updatePermission = async (req, res, next) => {
     try {
-        console.log(req.body, req.params.id);
         await Employee.findByIdAndUpdate(
             req.params.id, 
             { permissions: req.body },

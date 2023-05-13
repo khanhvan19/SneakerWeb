@@ -5,7 +5,7 @@ import { useState } from "react";
 function SecretField(props) {
     const {
         field, form,
-        label, disabled,
+        label, disabled, sx, placeholder, startLabel, size
     } = props
 
     const { name, value, onChange, onBlur } = field;
@@ -16,10 +16,10 @@ function SecretField(props) {
 
     return (  
         <FormControl
-            variant="outlined" margin="none" color="success" fullWidth
+            variant="outlined" margin="none" color="success" fullWidth size={size}
             error={showError}
         >
-            <InputLabel>{label}</InputLabel>
+            {(label) && <InputLabel>{label}</InputLabel>} 
             <OutlinedInput
                 label={label}
                 name={name}
@@ -27,9 +27,16 @@ function SecretField(props) {
                 onChange={onChange}
                 onBlur={onBlur}
                 disabled={disabled}
+                sx={[sx, { pr: 0 }]}
+                placeholder={placeholder}
                 type={show ? 'text' : 'password'}
+                startAdornment={startLabel && (
+                    <InputAdornment position="start">
+                        {startLabel}
+                    </InputAdornment>
+                )}
                 endAdornment={
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                         <IconButton
                             aria-label="toggle password visibility"
                             onClick={(e) => setShow((prev) => !prev)}
@@ -38,7 +45,7 @@ function SecretField(props) {
                         </IconButton>
                     </InputAdornment>
                 }
-                sx={{ pr: 0 }}
+                
             />
             {showError && (
                 <FormHelperText className='content-left-center' sx={{ mx: 0 }}>

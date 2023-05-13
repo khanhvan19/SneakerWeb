@@ -10,6 +10,7 @@ import AdminSidebar from "components/common/SideBar/adminSidebar";
 
 import styles from './Layout.module.scss'
 import classNames from "classnames/bind";
+import { ToastContainer } from "react-toastify";
 const cx = classNames.bind(styles);
 
 function PrivateLayout() {
@@ -40,6 +41,8 @@ function PrivateLayout() {
                     </div>
                 </Box>
             </div>
+
+            <ToastContainer theme={mode === 'light' ? 'dark' : 'light'}/>
         </Theme>
     );
 }

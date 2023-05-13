@@ -80,10 +80,11 @@ function FileField(props) {
                     />
                     <InputLabel>
                         <AddAPhotoOutlined />
-                        {insideLabel && 
+                        {(insideLabel && typeof image?.link !== 'string') && 
                             <Typography variant="overline" fontWeight={600}>
                                 {insideLabel}
-                            </Typography>}
+                            </Typography>
+                        }
                     </InputLabel>
                     {label && typeof image?.link === 'string' && (
                         <Box className="review-image">
@@ -96,6 +97,7 @@ function FileField(props) {
                             image={image.link}
                             name={image.path}
                             onRemove={handleRemoveCoverImage}
+                            shape={shape}
                         />
                     )}
                 </Box>

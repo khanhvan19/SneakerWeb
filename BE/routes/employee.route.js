@@ -10,14 +10,7 @@ router.route('/')
     .get(verifyAccessToken, employeeController.getAllEmployees)
     .post(uploadCloudEmployee.single('avatar'), employeeController.create);
 
-router.route('/:id')
-    .get(employeeController.getOneEmployee)
-    .put(uploadCloudEmployee.single('avatar'), employeeController.updateInfoEmployee)
-    .delete(employeeController.deleteEmployee);
-
-router.route('/lock/:id')
-    .put(employeeController.toggleStatus);
-
+//AUTH
 router.route('/login')
     .post(employeeController.login);
 
@@ -26,7 +19,26 @@ router.route('/refresh')
 
 router.route('/logout')
     .post(employeeController.logout);
+
+router.route('/shipper-login')
+    .post(employeeController.shipperLogin);
+
+//ADMIN PAGE
+router.route('/role')
+    .get(verifyAccessToken ,employeeController.getEmployeeByRole)
+
+router.route('/lock/:id')
+    .put(employeeController.toggleStatus);
+
+router.route('/permission/:id')
+    .put(employeeController.updatePermission);
     
+router.route('/:id')
+    .get(employeeController.getOneEmployee)
+    .put(uploadCloudEmployee.single('avatar'), employeeController.updateInfoEmployee)
+    .delete(employeeController.deleteEmployee);
+    
+//RESET PASS
 router.route('/forgot-password')
     .post(employeeController.sendMailVerifyResetPassword);
 
@@ -36,8 +48,5 @@ router.route('/reset-password/:id/:token')
 router.route('/reset-password/:id')
     .post(employeeController.resetPassword)
     .put(employeeController.changePassword);
-
-router.route('/permission/:id')
-    .put(employeeController.updatePermission);
 
 module.exports = router;

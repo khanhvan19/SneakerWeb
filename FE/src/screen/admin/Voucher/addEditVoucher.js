@@ -8,7 +8,7 @@ import {
     Button, 
 } from "@mui/material";
 import { ArrowBackOutlined, Speed } from "@mui/icons-material";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import axiosPrivate from "utils/axiosPrivate";
 import RouterBreadcrumbs from "components/ui/breadcrumbs";
@@ -46,7 +46,6 @@ function AddEditVoucher() {
     }
 
     const handleSubmit = (values, {resetForm}) => {
-        console.log(values.end);
         
         if(isAddMode) {
             axiosPrivate
@@ -106,7 +105,6 @@ function AddEditVoucher() {
                 initValue={initValue}
                 onSubmit={handleSubmit}
             />
-            <ToastContainer />
         </>
     );
 }

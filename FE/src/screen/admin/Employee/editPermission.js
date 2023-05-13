@@ -7,7 +7,6 @@ import {
     List, 
     ListItem, 
     ListItemSecondaryAction, 
-    ListItemText, 
     Paper, 
     Switch, 
     Typography
@@ -26,7 +25,7 @@ import { BREADCRUMB_ADMIN_EMPLOYEE } from "constants/breadcrumb";
 import { useEffect, useState } from "react";
 import axiosPrivate from "utils/axiosPrivate";
 import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { TOAST_DEFAULT_STYLE } from "assets/styles/constantsStyle";
 import { ROLE_OPTION } from "constants/optionSelectField";
 
@@ -177,7 +176,6 @@ function EditPermission() {
                     </Grid>
                 </Box>
             )}
-            <ToastContainer />
         </>
     );
 }

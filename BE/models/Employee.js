@@ -63,7 +63,8 @@ const employeeSchema = new mongoose.Schema({
     status: {
         type: Boolean,
         required: true
-    }
+    },
+    // shipping: Boolean
 }, { timestamps: true }, 
 // { minimize: false },
 )

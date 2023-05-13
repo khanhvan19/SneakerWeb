@@ -31,7 +31,7 @@ import {
     VisibilityOffOutlined, 
     VisibilityOutlined 
 } from "@mui/icons-material";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { TABLE_HEAD_CATEGORY } from "constants/tableHeader";
 import { BREADCRUMB_ADMIN_CATEGORY } from "constants/breadcrumb";
@@ -310,7 +310,6 @@ function CategoryScreen() {
                 />
             </Dialog>
 
-            <ToastContainer />
         </>
     );
 }

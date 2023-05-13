@@ -32,13 +32,13 @@ import {
     Tooltip,
     Typography
 } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import RouterBreadcrumbs from "components/ui/breadcrumbs";
 import { BREADCRUMB_ADMIN_VOUCHER } from "constants/breadcrumb";
 import { TABLE_HEAD_VOUCHER } from "constants/tableHeader";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axiosPrivate from "utils/axiosPrivate";
 import { formatLocalDateTime, formatMoney } from "utils/formatters";
 import { getComparator, stableSort } from "utils/tableSort";
@@ -272,8 +272,6 @@ function VoucherScreen() {
                     />
                 </Box>
             </Paper>
-
-            <ToastContainer />
 
             <Dialog 
                 open={dialog.show} 

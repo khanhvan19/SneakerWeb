@@ -1,4 +1,13 @@
-import { Box, Button, ButtonBase, Chip, IconButton, OutlinedInput, StepConnector, stepConnectorClasses, TableCell } from "@mui/material"
+import {
+    Box,
+    Button,
+    Chip,
+    IconButton,
+    OutlinedInput,
+    StepConnector,
+    stepConnectorClasses,
+    TableCell
+} from "@mui/material"
 import { styled } from "@mui/material/styles"
 
 export const DROPDOWN_ARROW_MENU = {
@@ -17,14 +26,6 @@ export const DROPDOWN_ARROW_MENU = {
         transform: "translateY(-50%) rotate(45deg)",
         zIndex: 0,
     },
-}
-
-export const TOAST_DEFAULT_STYLE = {
-    position: "top-right",
-    autoClose: 2500,
-    closeOnClick: false,
-    pauseOnHover: false,
-    draggable: true,
 }
 
 export const ImageInput = styled(OutlinedInput)(({ width, height, shape, reviewcover }) => ({
@@ -87,8 +88,8 @@ export const ImageInput = styled(OutlinedInput)(({ width, height, shape, reviewc
 export const CustomStepConnector = styled(StepConnector)(({ theme }) => ({
     maxWidth: '25%',
     [`& .${stepConnectorClasses.line}`]: {
-      borderTopWidth: 3,
-      borderRadius: 1,
+        borderTopWidth: 3,
+        borderRadius: 1,
     },
 }));
 
@@ -149,8 +150,10 @@ export const SquareBlock = styled(Box)(({ w }) => ({
     },
     '> *': {
         position: "absolute",
-        width: "100%"
-    } 
+        width: "100%",
+        height: "100%",
+        objectFit: "cover"
+    }
 }))
 
 export const SquareChip = styled(Chip)(({ theme }) => ({
@@ -159,3 +162,50 @@ export const SquareChip = styled(Chip)(({ theme }) => ({
     borderRadius: 'unset',
     borderColor: theme.palette.text.primary
 }))
+
+export const TOAST_DEFAULT_STYLE = {
+    position: "top-right",
+    autoClose: 2500,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+}
+
+export const TOAST_NAVIGATE_STYLE = {
+    position: "top-right",
+    autoClose: 1500,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+}
+
+export const TOAST_CENTER_STYLE = {
+    position: "top-center",
+    autoClose: 2500,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+}
+
+export const TOAST_NAVIGATE_CENTER_STYLE = {
+    position: "top-center",
+    autoClose: 1500,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: true,
+}
+
+export const negativeNumber = {
+    position: 'relative',
+    '&::before': {
+        content: '""',
+        display: 'inline-block',
+        width: 5,
+        height: '1.5px',
+        top: '50%',
+        left: '-2px',
+        transform: 'translate(-100%, -50%)',
+        position: 'absolute',
+        bgcolor: 'text.primary'
+    }
+}

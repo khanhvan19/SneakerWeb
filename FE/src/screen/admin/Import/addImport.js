@@ -8,7 +8,7 @@ import {
     Button, 
 } from "@mui/material";
 import { ArrowBackOutlined, Speed } from "@mui/icons-material";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import axiosPrivate from "utils/axiosPrivate";
 import RouterBreadcrumbs from "components/ui/breadcrumbs";
@@ -28,8 +28,9 @@ function AddImport() {
         products: [{
             product: '', 
             price: '', 
-            sizes: [{
-                code: '',
+            detail: [{
+                version: '',
+                size: '',
                 quantity: '',
             }],  
         }],
@@ -39,9 +40,8 @@ function AddImport() {
         console.log('submit', values, actions)
   
         axiosPrivate
-            .post('import/', 
-                {...values, employee: employee?._id}, 
-                { headers: { token: employee?.accessToken } }
+            .post('import/', {...values, employee: employee?._id}, 
+                { headers: { token: employee?.accessToken }}
             )
             .then((res) => {
                 actions.resetForm();
@@ -79,13 +79,13 @@ function AddImport() {
                     </Button>
                     <Button 
                         component={Link}
-                        to="/admin/product-sample/add"
+                        to="/admin/product/version/add"
                         size="large"
                         variant="contained" 
                         color="btnInfo" 
                         sx={{ ml: 2 }}
                     >
-                        Thêm mẫu giày
+                        Thêm sản phẩm
                     </Button>
                 </Box>
             </Box>
@@ -94,7 +94,6 @@ function AddImport() {
                 onSubmit={handleSubmit}
                 ref={addFormRef}
             />
-            <ToastContainer />
         </>
     );
 }

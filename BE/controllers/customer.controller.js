@@ -10,6 +10,7 @@ const regionName = require("../utils/regionName");
 const NotFoundError = require('../error/NotFoundError');
 const ForbibdenError = require('../error/ForbiddenError');
 const DuplicationError = require("../error/DuplicationError");
+const Cart = require("../models/Cart");
 
 exports.register = async (req, res, next) => {
     try {
@@ -17,8 +18,7 @@ exports.register = async (req, res, next) => {
         if (isExist) {
             return next(new DuplicationError("Email đã đăng ký tài khoản trên hệ thống!"));
         }
-        console.log(isExist);
-        await Customer.create(req.body);
+        await Customer.create({ ...req.body, status: true });
         res.status(200).json({
             message: "Đăng ký tài khoản thành công!"
         });    
@@ -29,7 +29,7 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-        const customer = await Customer.findOne({ email: req.body.email });
+        const customer = await Customer.findOne({ email: req.body.email })
         if (!customer) {
             return next(new NotFoundError("Không tìm thấy tài khoản của bạn!"));
         }
@@ -38,9 +38,10 @@ exports.login = async (req, res, next) => {
             return next(new NotFoundError("Mật khẩu bạn nhập không chính xác!"));
         }
         if (customer && validPassword) {
+            console.log(req.body.email);
             const accessToken = jwtMiddleware.generateAccessToken(customer);
             const refreshToken = jwtMiddleware.generateRefreshToken(customer);
-            res.cookie('refreshToken', refreshToken, {
+            res.cookie('customerRefreshToken', refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
                 secure: false,
@@ -48,7 +49,20 @@ exports.login = async (req, res, next) => {
                 sameSite: "strict",
             });
             const { password, ...others } = customer._doc;
-            res.status(200).json({ ...others, accessToken });
+
+            const cart = await Cart.findOne({ customer: customer._id });    
+            const countProductOfCart = (cart != null)
+                ? cart.products.reduce(
+                    (count, product) => count + product.quantity, 0
+                )
+                : 0
+
+            res.status(200).json({
+                ...others, 
+                accessToken,
+                totalCart: countProductOfCart,
+                message: "Đăng nhập thành công!"
+            });
         }
     } catch (err) {
         next(new Error());
@@ -57,13 +71,13 @@ exports.login = async (req, res, next) => {
 
 exports.logout =  async (req, res, next) => {
     try {
-        res.clearCookie('refreshToken', {path: '/'});
+        res.clearCookie('customerRefreshToken', {path: '/'});
         res.status(200).send("Đăng xuất thành công!" );
     } catch (err) {
         next(new Error("Đăng xuất thất bại!"))
     }
 }
-
+//
 exports.sendMailVerifyResetPassword = async (req, res, next) => {
     try {
         const customer = await Customer.findOne(req.body);
@@ -102,7 +116,7 @@ exports.sendMailVerifyResetPassword = async (req, res, next) => {
         next(new Error())
     }
 }
-
+//
 exports.verifyTokenResetPassword = async (req, res, next) => {
     const { id, token } = req.params;
     const customer = await Customer.findById(id);
@@ -117,7 +131,7 @@ exports.verifyTokenResetPassword = async (req, res, next) => {
         next(new ForbibdenError("Mail xác thực của bạn đã hết hạn!"));
     }
 }
-
+//
 exports.resetPassword = async (req, res, next) => {
     const { id } = req.params;
     try {
@@ -165,22 +179,12 @@ exports.updateInfoCustomer = async (req, res, next) => {
             delete req.body.avatar
         }
 
-        await Customer.findByIdAndUpdate(req.params.id, req.body , { new: true });
+        const result = await Customer.findByIdAndUpdate(req.params.id, req.body , { new: true });
         res.status(200).json({
-            message: "Đã cập nhật thành công"
+            result: result,
+            message: "Đã cập nhật thành công",
         })
     } catch(err) {
-        next(new Error());
-    }
-}
-
-exports.deleteCustomer = async (req, res, next) => {
-    try {
-        await Customer.findByIdAndDelete(req.params.id, {new: true});
-        res.status(200).json({
-            message: "Xóa thành công một khách hàng"
-        })
-    } catch (error) {
         next(new Error());
     }
 }
@@ -197,6 +201,23 @@ exports.toggleStatus = async (req, res, next) => {
         res.status(200).json({
             message: `${(result.status === true) ? "Mở khóa tài khoản" : "Khóa tài khoản"} thành công`
         })
+    } catch (error) {
+        next(new Error())
+    }
+}
+
+exports.changePassword = async (req, res, next) => {
+    try { 
+        const employee = await Customer.findById(req.params.id);
+        const validPassword = await bcrypt.compareSync(req.body.currentPassword, employee.password);
+
+        if (!validPassword) {
+            return next(new Error("Mật khẩu hiện tại không đúng!"));
+        }
+
+        const hashPassword = await bcrypt.hash(req.body.newPassword, 10);
+        await Customer.findByIdAndUpdate(req.params.id, {password: hashPassword});
+        res.status(200).json({message: "Thành công! Mật khẩu đã được thay đổi!"});
     } catch (error) {
         next(new Error())
     }

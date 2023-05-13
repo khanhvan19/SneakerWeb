@@ -1,0 +1,193 @@
+.loop-wrapper {
+    margin: 0 auto;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-bottom: 3px solid gray;
+}
+
+.mountain {
+    position: absolute;
+    background-color: #5be584;
+    transform: rotate(45deg);
+
+    &:nth-child(1) {
+        width: 200px;
+        height: 200px;
+        bottom: -100px;
+    }
+
+    &:nth-child(2) {
+        width: 240px;
+        height: 240px;
+        bottom: -120px;
+      
+    }
+
+    &:nth-child(3) {
+        width: 160px;
+        height: 160px;
+        bottom: -80px;
+    }
+}
+
+.hill {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #00ab55;
+    
+    &:nth-child(4) {
+        width: 320px;
+        height: 60px;
+        bottom: -35px;
+    }
+
+    &:nth-child(5) {
+        width: 240px;
+        height: 120px;
+        bottom: -65px;
+    }
+
+    &:nth-child(6) {
+        width: 280px;
+        height: 90px;
+        bottom: -50px;
+    }
+}
+
+.tree {
+    position: absolute;
+    height: 160px; 
+    bottom: 0;
+}
+
+.rock {
+    height: 8px; 
+    width: 16px;
+    bottom: 0px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    position: absolute;
+    background: gray;
+}
+
+.truck {
+    transition: all ease;
+    width: 96px;
+    bottom: 0px;
+    right: 50%;
+    transform: translateX(50%);
+    position: absolute;
+    display: inline-block;
+
+    & img {
+        vertical-align: middle;
+    }
+    
+    &::before {
+        content: " ";
+        position: absolute;
+        width: 30px;
+        box-shadow:
+            -38px 28px 0 1.5px #212b36,
+            -46px 18px 0 1.5px #212b36;
+    }
+}
+  
+.mountain {
+    animation: mtn1 8s 0.000s linear infinite; 
+}
+.mountain:nth-child(2) {
+    animation: mtn2 8s 0.000s linear infinite; 
+}
+.mountain:nth-child(3) {
+    animation: mtn3 8s 0.000s linear infinite; 
+}
+.hill:nth-child(4) {
+    animation: hill1 4s 0.000s linear infinite; 
+}
+.hill:nth-child(5) {
+    animation: hill2 4s 0.000s linear infinite; 
+}
+.hill:nth-child(6) {
+    animation: hill3 4s 0.000s linear infinite; 
+}
+.tree:nth-child(7) { 
+    animation: tree 6s 0.000s linear infinite; 
+}
+.tree:nth-child(8) {
+    animation: tree 4s 0.150s linear infinite; 
+}
+.tree:nth-child(9) {
+    animation: tree 3s 0.050s linear infinite; 
+}
+.rock { 
+    animation: rock 4s -0.530s linear infinite; 
+}
+.truck { 
+    animation: truck 4s 0.080s ease infinite; 
+
+    &::before {
+        animation: wind 1.5s 0.000s ease infinite; 
+    }
+}
+
+@keyframes mtn1 {
+    0% { right: calc(0% - 200px) }
+    100% { right: calc(100% + 200px) }
+}
+@keyframes mtn2 {
+    0% { right: calc(0% - 240px - 160px) }
+    100% { right: calc(100% + 240px + 160px) }
+}
+@keyframes mtn3 {
+    0% { right: calc(0% - 160px - 240px) }
+    100% { right: calc(100% + 160px) }
+}
+
+@keyframes hill1 {
+    0% { right: calc(0% - 200px) }
+    100% { right: calc(100% + 400px) }
+}
+@keyframes hill2 {
+    0% { right: calc(0% - 320px) }
+    100% { right: calc(100% + 320px) }
+}
+@keyframes hill3 {
+    0% { right: calc(0% - 400px) }
+    100% { right: calc(100% + 200px) }
+}
+
+@keyframes tree {
+    0% { 
+        right: 0%;
+        transform: translateX(100%);
+    }
+    100% { 
+        right: 100%;
+        transform: translateX(-100%);
+    }
+}
+  
+@keyframes rock {
+    0% { right: 0% }
+    100% { right: 100% }
+}
+
+@keyframes truck {
+    33% { transform: translateY(0px) }
+    35% { transform: translateY(-8px) }
+    37% { transform: translateY(0px) }
+    40% { transform: translateY(-4px) }
+    42% { transform: translateY(0px) }
+}
+
+@keyframes wind {
+    50% {
+        transform: translateY(3px) 
+    }
+}
+
+  

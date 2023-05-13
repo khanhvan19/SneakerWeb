@@ -12,7 +12,7 @@ function RouterBreadcrumbs({ prevLink = [], currentPage , homeIcon }) {
                     to={item.link} 
                     className='content-center'
                     underline='hover'
-                    color={currentPage ? 'inherit' : 'text.primary'} 
+                    color={(!currentPage && idx === prevLink.length - 1) ? 'inherit' : 'text.primary'} 
                     sx={{ 
                         fontSize: '0.875rem', 
                         fontWeight: 500,
@@ -21,7 +21,7 @@ function RouterBreadcrumbs({ prevLink = [], currentPage , homeIcon }) {
                             mr: 0.5
                         },
                         '&:hover': {
-                            color: currentPage ? "inherit" : "#000",
+                            color: (!currentPage && idx === prevLink.length - 1) ? "inherit" : "text.primary",
                         }
                     }}
                 >

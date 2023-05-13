@@ -5,10 +5,10 @@ import RouterBreadcrumbs from "components/ui/breadcrumbs";
 import { BREADCRUMB_ADMIN_PROFILE } from "constants/breadcrumb";
 import { ROLE_OPTION, SEX_OPTION } from "constants/optionSelectField";
 import { useSelector } from "react-redux";
+import { formatLocalDate } from "utils/formatters";
 
 import styles from './Profile.module.scss'
 import classNames from "classnames/bind";
-import { formatLocalDate } from "utils/formatters";
 const cx = classNames.bind(styles);
 
 function ProfileScreen() {

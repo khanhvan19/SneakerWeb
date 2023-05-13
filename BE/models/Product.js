@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    colorName: {
+    name: {
         type: String,
         required: true,
     },
+    brand: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Brands'
+    },
+    category: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Categorys'
+    }],
     price: {
         type: Number,
         required: true,
@@ -23,47 +31,39 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    images: [{
-        field: {
-            type: String,
-            required: true,
-        },
-        link: {
-            type: String,
-            required: true,
-        },
-        path: {
-            type: String,
-            required: true,
-        }
-    }],
-    sizes: [{
-        code: {
-            type: Number,
-            required: true,
-        },
-        label: {
-            type: String,
-            required: true,
-        },
-        quantity: {
-            type: Number,
-            required: true,
-        }
-    }],
+    sizeMin: {
+        type: Number,
+        required: true
+    },
+    sizeMax: {
+        type: Number,
+        required: true
+    },
+    gender: Array,
+    description: {
+        type: String,
+        trim: true,
+    },
     status: {
         type: Boolean,
         required: true,
-    },
-    sample: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ProductSamples'
     },
     isDeleted: {
         type: Boolean,
         require: true,
     }
-}, { timestamps: true })
+}, { 
+    timestamps: true,
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true},  
+})
+
+productSchema.virtual('versions', {
+    ref: 'ProductVersions',
+    localField: '_id',
+    foreignField: 'product',
+    match: { archived: false }
+})
 
 const Product = mongoose.model('Products', productSchema)
 

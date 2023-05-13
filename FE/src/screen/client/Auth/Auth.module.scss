@@ -1,0 +1,52 @@
+.btn-login-facebook {
+    flex: 1;
+    margin-right: 8px;
+    
+    & button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 22px !important;
+        font-family: inherit !important;
+        font-weight: 600;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+    }
+
+    & svg {
+        margin-right: 8px !important;
+    }
+}
+
+.btn-login-google {
+    flex: 1;
+    margin-left: 8px;
+
+    & button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        font-family: inherit !important;
+        padding: 8px 22px !important;
+        color: #212b36 !important;
+        border-radius: 0px !important;
+
+        & div {
+            margin-right: 8px !important;
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        & span {
+            padding: 0 !important;
+            line-height: 1.75;
+            font-size: 15px;
+            font-weight: 600 !important;
+        }
+    }
+
+}

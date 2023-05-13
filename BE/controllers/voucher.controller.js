@@ -43,7 +43,6 @@ exports.updateOneVoucher = async (req, res, next) => {
             message: "Chỉnh sửa phiếu giảm giá thành công!"
         });
     } catch (err) {
-        console.log(err);
         next(new Error())
     }
 }

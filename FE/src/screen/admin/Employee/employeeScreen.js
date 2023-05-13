@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AgeFromDateString } from "age-calculator";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { 
     Avatar,
@@ -289,7 +289,6 @@ function Employee() {
                     />
                 </Box>
             </Paper>
-            <ToastContainer />
         </>
     );
 }

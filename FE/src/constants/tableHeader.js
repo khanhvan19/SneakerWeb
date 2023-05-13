@@ -25,20 +25,22 @@ export const TABLE_HEAD_CATEGORY = [
 ]
 
 export const TABLE_HEAD_PRODUCT = [
-    { field:"image", label: "Hình ảnh"}, 
-    { field:"name", label: "Tên sản phẩm"}, 
-    { field:"price", label: "Giá bán"}, 
-    { field:"createdAt", label: "Ngày tạo"}, 
-    { field:"discount", label: "Giảm giá"}, 
-    { field:"sold", label: "Đã bán"}, 
-    { field:"star", label: "Đánh giá"}, 
-    { field:"status", label: "Trạng thái"}, 
+    { label: "Tên sản phẩm", sortBy: "name" }, 
+    { label: "Thương hiệu"}, 
+    { label: "Danh mục"}, 
+    { label: "Thể loại"},
+    { label: "Ngày tạo", sortBy:"createdAt" }, 
+    { label: "Giá bán", sortBy :"price" }, 
+    { label: "Giảm giá", sortBy:"discount" }, 
+    { label: "Đã bán", sortBy:"sold" }, 
+    { label: "Đánh giá", sortBy:"star" }, 
+    { label: "Trạng thái", sortBy:"status" }, 
 ]
 
 export const TABLE_HEAD_PRODUCT_SAMPLE = [
     { field:"name", label: "Mẩu sản phẩm"}, 
     { field:"createdAt", label: "Ngày tạo"}, 
-    { field:"brand", label: "Thương hiệu"}, 
+    { field:"brand.name", label: "Thương hiệu"}, 
     { field:"category", label: "Danh mục"}, 
     { field:"gender", label: "Loại"}, 
     { field:"status", label: "Trạng thái"},  
@@ -74,4 +76,23 @@ export const TABLE_HEAD_VOUCHER = [
     { field:"discountPrice", label: "Mức giá giảm"}, 
     { field:"minPrice", label: "Đơn tối thiểu"},
     { field:"brand", label: "Thương hiệu"},
+];
+
+export const TABLE_HEAD_ORDER = [
+    { label: "Mã đơn hàng", sortBy: '_id'},
+    { label: "Ngày đặt hàng", sortBy: 'createdAt'}, 
+    { label: "Người nhận"}, 
+    { label: "Số điện thoại"}, 
+    { label: "Vận chuyển", sortBy: 'deliveryMethod' },
+    { label: "Thanh toán", sortBy: 'paymentMethod'},
+    { label: "Trạng thái", sortBy: 'status'}, 
+    { label: "Tổng giá trị", sortBy: 'total'}, 
+];
+
+export const TABLE_HEAD_REVIEW = [
+    { label: "Sản phẩm"},
+    { label: "Khách hàng"}, 
+    { label: "Ngày gửi", sortBy: 'createdAt'}, 
+    { label: "Mức đánh giá", sortBy: 'rating'},
+    { label: "Trạng thái", sortBy: 'status'}, 
 ];

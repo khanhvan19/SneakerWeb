@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useSelector } from "react-redux";
 
 import {  
@@ -61,7 +61,7 @@ function AddEditEmployee() {
         Object.keys(values).forEach((key) => {
             formData.append(key, values[key])
         })
-      
+        
         if(isAddMode) {
             axiosPrivate
                 .post('employee/', formData, 
@@ -144,7 +144,6 @@ function AddEditEmployee() {
                 initValue={initValue}
                 onSubmit={handleSubmit}
             />
-            <ToastContainer />
         </>
     );
 }
