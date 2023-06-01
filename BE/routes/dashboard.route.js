@@ -28,4 +28,7 @@ router.route('/potential-customer')
 router.route('/bestseller')
     .post(dashboardController.bestSellerProduct)
 
+router.route('/employee-count')
+    .get(dashboardController.countEmployee)
+
 module.exports = router;

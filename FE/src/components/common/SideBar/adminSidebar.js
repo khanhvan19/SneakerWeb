@@ -114,9 +114,9 @@ function AdminSidebar() {
                     <CardContent>
                         <Avatar src={employee?.avatar?.link || "/"} alt={employee?.name} />
                     </CardContent>
-                    <CardContent sx={{ flex: 1, px: 0, '&:last-child': { pb: '16px' } }}>
+                    <CardContent sx={{ flex: 1, px: 0, '&:last-child': { pb: 2 } }}>
                         <Typography variant="subtitle2">{employee?.name}</Typography>
-                        <Typography variant="caption" color='text.secondary'>{employee?.email}</Typography>
+                        <Typography variant="caption" color='text.secondary' className="text-eclipse one-line">{employee?.email}</Typography>
                     </CardContent>
                 </Card>
 

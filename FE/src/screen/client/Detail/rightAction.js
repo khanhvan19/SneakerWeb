@@ -1,4 +1,4 @@
-import { ExpandCircleDownOutlined, FavoriteBorderOutlined, ShoppingCartOutlined, Straighten } from "@mui/icons-material";
+import { ExpandCircleDownOutlined, FavoriteBorder, FavoriteBorderOutlined, FavoriteTwoTone, ShoppingCartOutlined, Straighten } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from "@mui/material";
 import { SquareBlock, TOAST_CENTER_STYLE } from "assets/styles/constantsStyle";
 import { useState } from "react";
@@ -12,7 +12,9 @@ import { formatMoney } from "utils/formatters";
 
 function RightAction({ versionId, version, versions }) {
     const isLogin = useSelector((state) => state.client?.login?.data);
+    var favorites = useSelector((state) => state.favorite?.favorites);
     const [chooseSize, setChooseSize] = useState({ sku: '', quantity: '' });
+    var isFavorite = favorites?.includes(version?.product?._id,);
 
     const dispatch = useDispatch();
     var navigate = useNavigate()
@@ -127,11 +129,14 @@ function RightAction({ versionId, version, versions }) {
                 </Button>
                 <Button
                     size="large"
-                    color="btnDark"
+                    color={isFavorite ? 'btnError' : 'btnDark'}
                     variant="outlined"
-                    sx={{ ml: 1.5, py: 1.5, borderRadius: 'unset' }}
+                    sx={{ ml: 1.5, py: 1.5, borderRadius: 'unset', border: '2px solid #212b36' }}
                 >
-                    <FavoriteBorderOutlined fontSize="large" />
+                    {isFavorite 
+                        ? <FavoriteTwoTone fontSize='large' /> 
+                        : <FavoriteBorder fontSize='large'  />
+                    }
                 </Button>
             </Box>
             <Accordion

@@ -2,6 +2,7 @@ const Customer = require("../models/Customer")
 const Import = require("../models/Import")
 const Order = require("../models/Order")
 const Product = require("../models/Product")
+const Employee = require("../models/Employee")
 
 const time = 1000 * 60 * 60 * 24 * 7
 const oneDate = 1000 * 60 * 60 * 24
@@ -9,7 +10,7 @@ const oneDate = 1000 * 60 * 60 * 24
 exports.getCountProduct = async (req, res, next) => {
     try {
         const count = await Product.find({ isDeleted: null }).count()
-        const countInWeek = await Order.aggregate([
+        var countInWeek = await Order.aggregate([
             {
                 $match: {
                     $and: [
@@ -28,9 +29,10 @@ exports.getCountProduct = async (req, res, next) => {
             }
         ])
 
+        countInWeek = (countInWeek.length !== 0 ? countInWeek[0].count : 0)
         res.status(200).json({
             total: count,
-            inWeek: countInWeek[0].count
+            inWeek: countInWeek
         })
     } catch (error) {
         next(new Error())
@@ -152,6 +154,7 @@ exports.statisticImport = async (req, res, next) => {
                     _id: 0
                 }
             },
+            { $sort: { date: 1 } },
             { $limit: 10 }
         ])
 
@@ -231,7 +234,7 @@ exports.potentialCustomer = async (req, res, next) => {
                     countOrder: { $sum: 1 }
                 }
             },
-            { $sort: { count: -1 } },
+            { $sort: { countOrder: -1 } },
             { $limit: 10 },
             {
                 $lookup: {
@@ -243,7 +246,6 @@ exports.potentialCustomer = async (req, res, next) => {
             },
             { $unwind: "$customer" },
             { $project: { _id : 0 } }
-
         ])
 
         res.status(200).send(result)
@@ -269,3 +271,21 @@ exports.bestSellerProduct = async (req, res, next) => {
         next(new Error())
     }
 } 
+
+exports.countEmployee = async (req, res, next) => {
+    try {
+        const result = await Employee.aggregate([
+            {
+                $group: {
+                    _id: "$role",
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { _id : 1 } }
+        ])
+
+        res.status(200).send(result)
+    } catch (error) {
+        next(new Error())
+    }
+}

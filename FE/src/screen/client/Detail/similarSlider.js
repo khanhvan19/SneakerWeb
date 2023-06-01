@@ -1,6 +1,8 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
 import ProductCard from "components/ui/Card/productCard";
+import ProductSummaryCard from "components/ui/Card/productSummaryCard";
+import ProductSlider from "components/ui/productSlider";
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import axiosPublic from "utils/axiosPublic";
@@ -75,13 +77,13 @@ function SimilarSlider({ brand, productId }) {
                     Có thể bạn cũng thích
                 </Typography>
                 <Box mt={3}>
-                    <Slider {...settings}>
-                        {similar && similar.map((item, idx) => (
+                    <ProductSlider tile={4}>
+                        {similar.map((product, idx) => (
                             <Box key={idx} px={1}>
-                                <ProductCard data={item} />
+                                <ProductSummaryCard data={product} />
                             </Box>
                         ))}
-                    </Slider>
+                    </ProductSlider>
                 </Box>
             </Box>
         </>

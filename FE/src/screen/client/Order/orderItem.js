@@ -30,7 +30,7 @@ function OrderItem({ data }) {
                 </Box>
             </Box>
             <Box display='flex' alignItems='center'>
-                {data.discount && (
+                {data.discount !== 0 && (
                     <Typography 
                         mr={1} variant='body2' color='text.secondary'
                         sx={{ textDecoration: 'line-through' }} 

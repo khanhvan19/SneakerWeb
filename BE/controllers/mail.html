@@ -1,18 +1,13 @@
-const nodemailer = require('nodemailer')
-
-exports.transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: {
-            user: process.env.EMAIL_NAME,
-            pass: process.env.EMAIL_APP_PASSWORD,
-        },
-    });
-
-exports.mailResetPassword = (linkVerify) => {
-
-    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width: 843px; border: 1px solid #000;">
         <div style="width: 75%; padding: 0 12px; margin: 0 auto;">
             <div style="padding: 12px 0; text-align: center; border-bottom: 1px solid #919eab99">
                 <img src="https://res.cloudinary.com/dxtgn6q3g/image/upload/v1685434256/sneakerapp/assest/logo-main-light_y0kmlr.png" alt="" height="60" />
@@ -23,7 +18,7 @@ exports.mailResetPassword = (linkVerify) => {
                 <p style="font-size: 16px;">Vì lý do bảo mật, vui lòng nhấn xác minh để chúng tôi biết đó là bạn trước khi thay đổi mật khẩu.</p>
                 <p style="font-size: 16px;">Mã xác minh này chỉ có hiệu lực trong <b>15 phút</b> kể từ khi bạn gửi yêu cầu.</p>
                 <a 
-                    href=${linkVerify}
+                    href=${process.env.URL_FRONTEND_SERVER}/admin/reset_password/${employee._id}/${token}
                     style="display: block; padding: 12px 0; margin: 32px 0; background-color: #00ab55; color: white; text-align: center; text-decoration: none; border-radius: 8px"
                 >
                     XÁC MINH NGAY
@@ -35,5 +30,6 @@ exports.mailResetPassword = (linkVerify) => {
                 <div style="color: #919eab; font-size: 14px">© Since 2023</div>
             </div>
         </div>
-    `
-}
+    </div>
+</body>
+</html>

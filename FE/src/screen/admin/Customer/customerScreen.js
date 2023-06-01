@@ -47,6 +47,7 @@ import { BREADCRUMB_ADMIN_CUSTOMER } from "constants/breadcrumb";
 import RouterBreadcrumbs from "components/ui/breadcrumbs";
 import { TOAST_DEFAULT_STYLE } from "assets/styles/constantsStyle";
 import { checkPermission } from "utils";
+import Swal from "sweetalert2";
 
 function CustomerScreen() {
     const employee = useSelector((state) => state.auth?.login?.data);
@@ -71,16 +72,26 @@ function CustomerScreen() {
 
     const handleToggleLockAccount = (id, status) => {
         if(checkPermission("P6_3") === true) {
-            alert(`Bạn có chắc muốn ${status === true ? "khóa" : "mở khóa"} tài khoản khách hàng này?`);
-            axiosPrivate
-                .put(`customer/lock/${id}`, { headers: { token: employee?.accessToken} })
-                .then((res) => {
-                    toast.success(res.message, TOAST_DEFAULT_STYLE);
-                    setRefresh((prev) => prev + 1);
-                }) 
-                .catch((err) => {
-                    toast.error(err.message, TOAST_DEFAULT_STYLE);
-                })
+            Swal.fire({
+                icon: 'question',
+                title: `Bạn có chắc muốn ${status === true ? 'khóa' : 'mở khóa'} tài khoản của khách hàng này?`,
+                confirmButtonText: 'Xác nhận',
+                confirmButtonColor:  status === true ? '#ffab00' : '#00ab55',
+                showCancelButton: true,
+                cancelButtonText: 'Trở lại',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosPrivate
+                        .put(`customer/lock/${id}`, { headers: { token: employee?.accessToken} })
+                        .then((res) => {
+                            toast.success(res.message, TOAST_DEFAULT_STYLE);
+                            setRefresh((prev) => prev + 1);
+                        }) 
+                        .catch((err) => {
+                            toast.error(err.message, TOAST_DEFAULT_STYLE);
+                        })
+            }})
         }
     }
 

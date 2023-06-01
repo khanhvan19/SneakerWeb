@@ -15,8 +15,8 @@ const NavigationAction = styled(BottomNavigationAction)(({ theme }) => ({
 const PAGE = [
     { label: 'Đơn hàng', icon: <ReceiptLongOutlined />, linkTo: '/shipper/' },
     { label: 'Lịch sử', icon: <HistoryOutlined />, linkTo: '/shipper/history' },
-    { label: 'Thông báo', icon: <NotificationsActiveOutlined />, linkTo: '/shipper/notify' },
-    { label: 'Tài khoản', icon: <PersonOutlineOutlined />, linkTo: '/shipper/account' },
+    // { label: 'Thông báo', icon: <NotificationsActiveOutlined />, linkTo: '/shipper/notify' },
+    // { label: 'Tài khoản', icon: <PersonOutlineOutlined />, linkTo: '/shipper/account' },
 ]
 
 function ShipperNavigation() {

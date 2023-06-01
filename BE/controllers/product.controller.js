@@ -176,6 +176,12 @@ exports.getOnePage = async (req, res, next) => {
         const category = (params.category)
             ? await Category.findById(params.category).select('name -_id')
             : null; 
+        const size = (params.size) 
+            ? `Size ${req.body.size} EU` 
+            : null
+        const star = (params.star)
+            ? `Từ ${req.body.star} sao`
+            : null
 
         res.status(200).json({
             data: results,
@@ -186,6 +192,8 @@ exports.getOnePage = async (req, res, next) => {
             },
             category: category?.name,
             brand: brand?.name,
+            size: size,
+            star: star,
         });
     } catch {
         next(new Error());

@@ -41,6 +41,7 @@ import AddEditForm from "./addEditForm";
 import axiosPrivate from "utils/axiosPrivate";
 import { TOAST_DEFAULT_STYLE } from "assets/styles/constantsStyle";
 import { checkPermission } from "utils";
+import Swal from "sweetalert2";
 
 function BrandScreen() {
     const employee = useSelector((state) => state.auth?.login?.data);
@@ -142,33 +143,54 @@ function BrandScreen() {
 
     const handleDeleteBrand = (id) => {
         if(checkPermission("P2_5") === true) {
-            alert('Bạn có chắc muốn xóa?');
-            axiosPrivate
-                .delete(`brand/${id}`, 
-                    { headers: { token: employee?.accessToken} }
-                )
-                .then((res) => {
-                    toast.success(res.message, TOAST_DEFAULT_STYLE);
-                    setRefresh((prev) => prev + 1);
-                })
-                .catch((err) => {
-                    toast.error(err.message, TOAST_DEFAULT_STYLE);
-                })
+            Swal.fire({
+                icon: 'question',
+                title: 'Bạn có chắc muốn xóa thương hiệu này?',
+                confirmButtonText: 'Xác nhận',
+                confirmButtonColor: '#ff5630',
+                showCancelButton: true,
+                cancelButtonText: 'Trở lại',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosPrivate
+                        .delete(`brand/${id}`, 
+                            { headers: { token: employee?.accessToken} }
+                        )
+                        .then((res) => {
+                            toast.success(res.message, TOAST_DEFAULT_STYLE);
+                            setRefresh((prev) => prev + 1);
+                        })
+                        .catch((err) => {
+                            toast.error(err.message, TOAST_DEFAULT_STYLE);
+                        })
+                }
+            })
         }
     }
 
     const handleToggleStatus = (id, status) => {
         if(checkPermission("P2_4") === true) {
-            alert(`Bạn có chắc muốn ${status === true ? "ẩn" : "hiển thị"} thương hiệu này?`);
-            axiosPrivate
-                .put(`brand/hide/${id}`, { headers: { token: employee?.accessToken} })
-                .then((res) => {
-                    toast.success(res.message, TOAST_DEFAULT_STYLE);
-                    setRefresh((prev) => prev + 1);
-                }) 
-                .catch((err) => {
-                    toast.error(err.message, TOAST_DEFAULT_STYLE);
-                })
+            Swal.fire({
+                icon: 'question',
+                title: `Bạn có chắc muốn ${status === true ? 'ẩn' : 'hiển thị'} thương hiệu này?`,
+                confirmButtonText: 'Xác nhận',
+                confirmButtonColor:  status === true ? '#ffab00' : '#00ab55',
+                showCancelButton: true,
+                cancelButtonText: 'Trở lại',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosPrivate
+                        .put(`brand/hide/${id}`, { headers: { token: employee?.accessToken} })
+                        .then((res) => {
+                            toast.success(res.message, TOAST_DEFAULT_STYLE);
+                            setRefresh((prev) => prev + 1);
+                        }) 
+                        .catch((err) => {
+                            toast.error(err.message, TOAST_DEFAULT_STYLE);
+                        })
+            }})
         }
     }
 
@@ -205,7 +227,7 @@ function BrandScreen() {
                 <FormControl fullWidth color="btnSuccess">
                     <Input 
                         sx={{ px: 2, py: 1.5}}
-                        placeholder="Tìm kiếm với tên nhân viên"
+                        placeholder="Tìm kiếm với tên thương hiệu"
                         startAdornment={
                             <InputAdornment position="start">
                                 <Search />

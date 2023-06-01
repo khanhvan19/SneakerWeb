@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary').v2;
 
 const Employee = require('../models/Employee');
 const jwtMiddleware = require('../middlewares/jwt-verify')
-const { transporter } = require('../utils/createMailTransport')
+const { transporter, mailResetPassword } = require('../utils/createMailTransport')
 const regionName = require("../utils/regionName");
 
 const NotFoundError = require('../error/NotFoundError');
@@ -126,20 +126,14 @@ exports.sendMailVerifyResetPassword = async (req, res, next) => {
         const secret = process.env.JWT_MAIL_SECRET_KEY + employee.password;
         const token = jwtMiddleware.generateMailVerifyToken(employee, secret)
         
-        const contentMail = 
-            `<h2>Sneaker Shop xin chào bạn</h2>
-            <p>Bạn vừa gửi yêu cầu thay đổi mật khẩu đăng nhập cho tài khoản của bạn.</p>
-            <p>Vì lý do bảo mật, vui lòng nhấn xác minh để chứng minh là chính bạn trước khi thay đổi mật khẩu.</p>
-            <p>Link xác minh này chỉ có hiệu lực trong <b>15 phút</b> từ khi bạn gửi yêu cầu</p>
-            <a 
-                href=${process.env.URL_FRONTEND_SERVER}/admin/reset_password/${employee._id}/${token}
-                style="display: inline-block; padding: 12px 48px; background-color: blue; color: white; text-decoration: none; font-weight: bold;"
-            >XÁC MINH NGAY</a>`
+        const contentMail = mailResetPassword(
+            `${process.env.URL_FRONTEND_SERVER}/admin/reset_password/${employee._id}/${token}`
+        )
         
         const mailOption = {
-            from: '"Sneaker Shop" <no-reply@sneakershop.com>',
+            from: '"Sneaker Shop" <no-reply@support.thesneak.com>',
             to: employee.email,
-            subject: "Verify Email",
+            subject: "Xác minh Email người dùng quên mật khẩu!",
             html: contentMail,
         }
 
@@ -176,7 +170,7 @@ exports.resetPassword = async (req, res, next) => {
     try {
         const hashPassword = await bcrypt.hash(req.body.password, 10);
         await Employee.findByIdAndUpdate(id, {password: hashPassword}, {new: true});
-        res.status(200).json({status: 'success', message: "Đổi mật khẩu thành công!"});
+        res.status(200).json({status: 'success', message: "Đặt lại mật khẩu thành công!"});
     } catch (error) {
         next(new Error())
     }

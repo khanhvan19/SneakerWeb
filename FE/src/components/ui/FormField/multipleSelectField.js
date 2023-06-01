@@ -21,8 +21,8 @@ function MultipleSelectField(props) {
     const showError = errors[name] && (!!touched[name]);
 
     const getNamebyId = (array, id) => {
-        const result = array.find((item) => (item._id || item.value) === id);
-        return result.name || result.label
+        const result = array.find((item) => (item?._id || item?.value) === id);
+        return result?.name || result?.label
     }
 
     return (  

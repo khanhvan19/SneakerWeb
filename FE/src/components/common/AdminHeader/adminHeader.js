@@ -61,33 +61,6 @@ function AdminHeader() {
             sx={{ bgcolor: "background.glass" }}
         >
             <Box className={cx("adheader-container")} sx={{px: 2}}>
-                {/* <Box sx={{ mx: 2 }}>    
-                    <Tooltip title="Thông báo" arrow>
-                        <IconButton
-                            onClick={(e) => setBtnNotify(e.currentTarget)}
-                            aria-haspopup="true"
-                            aria-controls={openNotifyMenu ? "notify-menu" : undefined}
-                            aria-expanded={openNotifyMenu ? "true" : undefined}
-                            sx={ openNotifyMenu ? { color: "text.accent", bgcolor: "background.accent" } : {}}
-                        >
-                            <NotificationsActiveOutlined />
-                        </IconButton>
-                    </Tooltip>
-                    <Menu
-                        anchorEl={btnNotify}
-                        id="notify-menu"
-                        open={openNotifyMenu}
-                        onClose={() => setBtnNotify(null)}
-                        transformOrigin={{ horizontal: "right", vertical: "top" }}
-                        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                        PaperProps={{ elevation: 0, sx: constantsStyle.DROPDOWN_ARROW_MENU,}}
-                    >
-                        <MenuItem onClick={() => setBtnNotify(null)}>
-                            chua viet
-                        </MenuItem>
-                    </Menu>
-                </Box> */}
-                
                 <Box sx={{ mr: 2 }}>
                     <Tooltip title="Giao diện sáng" arrow>
                         <IconButton onClick={handleChangeMode}>

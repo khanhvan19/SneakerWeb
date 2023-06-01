@@ -124,7 +124,7 @@ function SliderBanner() {
                     pl={8} pr={6} pt={12} zIndex={8} 
                 >
                     <img src={image.nikeLogo} alt="" height={120}/>
-                    {/* <Box 
+                    <Box 
                         mt={4} pl={2}
                         sx={{ borderLeft: '8px solid', borderColor: 'text.primary' }}
                     > 
@@ -139,7 +139,7 @@ function SliderBanner() {
                         <Typography fontStyle='italic' fontWeight={600} textAlign='end' mt={0.5}>
                             "Impossible Is Nothing"
                         </Typography>
-                    </Box> */}
+                    </Box>
                 </Box>
             </Box>
             <Box position='relative'>
@@ -185,16 +185,34 @@ function SliderBanner() {
                         sx={{ borderLeft: '8px solid', borderColor: 'text.primary' }}
                     > 
                         <Typography fontSize={18}>
-                            <b>Adidas</b> Thương hiệu giày thể thao nổi tiếng thế giới của Đức từ năm 1949.
+                            <b>Reebok International Limited</b> ,từ năm 2005 trở thành công ty con của Adidas
+                            là nhà sản xuất giày, trang phục và phụ kiện thể thao nổi tiếng.
                         </Typography>
                         <Typography fontSize={18}>
-                            Với các công nghệ hàng đầu trong sản xuất giày như BOOST, Springblade, Primeknit,... 
-                            Giày Adidas mang đến thiết kế tinh xảo, nhẹ, bền giúp người mang đến cho người dùng 
-                            sự thoải mái vận động và phù hợp với mọi đối tượng khách hàng.
+                            Reebok luôn sử dụng công nghệ phát triển hàng đầu và những sản phẩm sáng tạo,
+                            độc đáo để tạo ra những sản phẩm chất lượng cao. 
+                         </Typography>
+                        <Typography fontSize={18}>
+                            Với sự hỗ trợ của công nghệ ZigTech trong sản xuất phần đế giày, 
+                            giày Reebok có thể giúp hấp thụ lực và tạo lực đẩy rất tốt, giúp người mang di chuyển linh hoạt hơn.              
                         </Typography>
                         <Typography fontStyle='italic' fontWeight={600} textAlign='end' mt={0.5}>
-                            "Impossible Is Nothing"
+                            "I am what I am"
                         </Typography>
+                    </Box>
+                    <Box textAlign='end'>
+                        <Button
+                            variant="contained" color="btnDark"
+                            endIcon={<DoubleArrowOutlined />} 
+                            sx={{ mt: 2, borderRadius: 0 }}
+                            onClick={() => navigate({
+                                    pathname: '/product/',
+                                    search: queryString.stringify({ brand: findIdByName('Reebok') })
+                            })}
+
+                        >
+                            Xem sản phẩm
+                        </Button>
                     </Box>
                 </Box>
             </Box>

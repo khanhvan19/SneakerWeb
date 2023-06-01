@@ -6,7 +6,7 @@ import { SquareBlock } from "assets/styles/constantsStyle";
 function HorizontalCard(props) {
     const {
         image , primaryTitle, secondaryTitle, caption,
-        endAction, endActionIcon, searchValue, linkTo
+        endAction, endActionIcon, activeAction, linkTo
     } = props
 
     return (  
@@ -54,6 +54,7 @@ function HorizontalCard(props) {
                 </ListItemButton>
             </Box>
             <IconButton 
+                color={activeAction === true ? 'btnError': 'btnDark' }
                 onClick={endAction} 
                 sx={{ position: 'absolute', top: 0 , right: 10 }}
             >

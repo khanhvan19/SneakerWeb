@@ -43,6 +43,7 @@ import { BREADCRUMB_ADMIN_EMPLOYEE } from "constants/breadcrumb";
 import RouterBreadcrumbs from "components/ui/breadcrumbs";
 import { TOAST_DEFAULT_STYLE } from "assets/styles/constantsStyle";
 import { checkPermission } from "utils";
+import Swal from "sweetalert2";
 
 function Employee() {
     const employee = useSelector((state) => state.auth?.login?.data);
@@ -68,31 +69,51 @@ function Employee() {
 
     const handleDeleteEmployee = (id) => {
         if(checkPermission("P7_6") === true) {
-            alert('Bạn có chắc muốn xóa?');
-            axiosPrivate
-                .delete(`employee/${id}`, { headers: { token: employee?.accessToken} })
-                .then((res) => {
-                    toast.success(res.message, TOAST_DEFAULT_STYLE);
-                    setRefresh((prev) => prev + 1);
-                })
-                .catch((err) => {
-                    toast.error(err.message, TOAST_DEFAULT_STYLE);
-                })
+            Swal.fire({
+                icon: 'question',
+                title: 'Bạn có chắc muốn xóa nhân viên này?',
+                confirmButtonText: 'Xác nhận',
+                confirmButtonColor: '#ff5630',
+                showCancelButton: true,
+                cancelButtonText: 'Trở lại',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosPrivate
+                        .delete(`employee/${id}`, { headers: { token: employee?.accessToken} })
+                        .then((res) => {
+                            toast.success(res.message, TOAST_DEFAULT_STYLE);
+                            setRefresh((prev) => prev + 1);
+                        })
+                        .catch((err) => {
+                            toast.error(err.message, TOAST_DEFAULT_STYLE);
+                        })
+            }})
         }
     }
 
     const handleToggleLockAccount = (id, status) => {
         if(checkPermission("P7_4") === true || employee._id === id) {
-            alert(`Bạn có chắc muốn ${status === true ? "khóa" : "mở khóa"} tài khoản nhân viên này?`);
-            axiosPrivate
-                .put(`employee/lock/${id}`, { headers: { token: employee?.accessToken} })
-                .then((res) => {
-                    toast.success(res.message, TOAST_DEFAULT_STYLE);
-                    setRefresh((prev) => prev + 1);
-                }) 
-                .catch((err) => {
-                    toast.error(err.message, TOAST_DEFAULT_STYLE);
-                })
+            Swal.fire({
+                icon: 'question',
+                title: `Bạn có chắc muốn ${status === true ? 'khóa' : 'mở khóa'} tài khoản của nhân viên này?`,
+                confirmButtonText: 'Xác nhận',
+                confirmButtonColor:  status === true ? '#ffab00' : '#00ab55',
+                showCancelButton: true,
+                cancelButtonText: 'Trở lại',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosPrivate
+                        .put(`employee/lock/${id}`, { headers: { token: employee?.accessToken} })
+                        .then((res) => {
+                            toast.success(res.message, TOAST_DEFAULT_STYLE);
+                            setRefresh((prev) => prev + 1);
+                        }) 
+                        .catch((err) => {
+                            toast.error(err.message, TOAST_DEFAULT_STYLE);
+                        })
+            }})
         }
     }
 

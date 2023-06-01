@@ -203,9 +203,6 @@ function ReviewScreen() {
                                                     <Box color='text.secondary'>{row.customer.email}</Box>
                                                 </TableCell>
                                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>
-                                                    {formatLocalDateTime(row.createdAt)}
-                                                </TableCell>
-                                                <TableCell sx={{ whiteSpace: 'nowrap' }}>
                                                     <Box className="content-left-center">
                                                         <Rating value={row.rating} precision={1} readOnly size="small" />
                                                         <Box sx={{ ml: 2, color: "#faaf00", fontWeight: 600 }}>
@@ -215,6 +212,9 @@ function ReviewScreen() {
                                                 </TableCell>
                                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>
                                                     {renderStatusChip(row.status)}
+                                                </TableCell>
+                                                <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                                                    {formatLocalDateTime(row.createdAt)}
                                                 </TableCell>
                                                 <TableCell>
                                                     <Button

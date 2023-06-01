@@ -43,7 +43,7 @@ function HideOnScroll(props) {
         <Fade in={scrollTopTrigger}>
           <Tooltip title="Về đầu trang" arrow>
             <Box
-                zIndex={99}
+                zIndex={9999}
                 onClick={handleScrollTop}
                 sx={{ position: 'fixed', bottom: 88, right: 42 }}
             >

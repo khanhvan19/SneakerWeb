@@ -8,14 +8,14 @@ import { updateFavorite } from "redux/slices/favorite.slice";
 import axiosClientPrivate from "utils/axiosClientPrivate";
 import { formatMoney } from "utils/formatters";
 import { discountPrice } from "utils";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { FavoriteBorder, FavoriteTwoTone } from "@mui/icons-material";
 
 function ProductHoverImageCard({ data }) {
     const isLogin = useSelector((state) => state.client?.login?.data);
     var favorites = useSelector((state) => state.favorite?.favorites);
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    var isFavorite = favorites?.includes(data._id);
+    var isFavorite = favorites?.includes(data?._id);
 
     const handleToggleFavorite = () => {
         if(!isLogin) {
@@ -91,7 +91,10 @@ function ProductHoverImageCard({ data }) {
                     color={isFavorite ? 'btnError' : 'btnDark'}
                     onClick={handleToggleFavorite}
                 >
-                    {isFavorite ? <Favorite /> : <FavoriteBorder />}
+                    {isFavorite 
+                        ? <FavoriteTwoTone sx={{ fontSize: 28 }} /> 
+                        : <FavoriteBorder sx={{ fontSize: 28 }}  />
+                    }
                 </IconButton>
             </Box>     
         </Box>

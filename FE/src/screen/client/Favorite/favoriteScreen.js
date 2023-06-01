@@ -25,15 +25,13 @@ function FavoriteScreen() {
     return (  
         <Box flex={1}>
             <Typography variant='h5' mb={2}>Sản phẩm yêu thích</Typography>
-            <Paper elevation={4} sx={{ borderRadius: 0, mb: 1.5, p: 1.5 }}>
-                <Grid container spacing={2}>
-                    {favorite && favorite.map((item, idx) => (
-                        <Grid xs={4} key={idx}>
-                            <ProductCard data={item} />
-                        </Grid>
-                    ))}
-                </Grid>
-            </Paper>
+            <Grid container spacing={2}>
+                {favorite && favorite.map((item, idx) => (
+                    <Grid xs={4} key={idx}>
+                        <ProductCard data={item} />
+                    </Grid>
+                ))}
+            </Grid>
         </Box>
     );
 }

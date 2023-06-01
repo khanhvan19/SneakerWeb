@@ -8,7 +8,7 @@ import { updateFavorite } from "redux/slices/favorite.slice";
 import axiosClientPrivate from "utils/axiosClientPrivate";
 import { formatMoney } from "utils/formatters";
 import { discountPrice } from "utils";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, FavoriteTwoTone } from "@mui/icons-material";
 
 function ProductSummaryCard({ data }) {
     const isLogin = useSelector((state) => state.client?.login?.data);
@@ -69,7 +69,10 @@ function ProductSummaryCard({ data }) {
                     color={isFavorite ? 'btnError' : 'btnDark'}
                     onClick={handleToggleFavorite}
                 >
-                    {isFavorite ? <Favorite /> : <FavoriteBorder />}
+                    {isFavorite 
+                        ? <FavoriteTwoTone sx={{ fontSize: 28 }}  /> 
+                        : <FavoriteBorder sx={{ fontSize: 28 }} />
+                    }
                 </IconButton>
             </Box>     
         </Box>

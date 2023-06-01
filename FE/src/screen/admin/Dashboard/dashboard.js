@@ -1,4 +1,4 @@
-import { AddBusinessOutlined, CategoryOutlined, CreditScoreOutlined, FaceRetouchingNaturalOutlined, HourglassFullTwoTone, InsightsOutlined, Inventory2TwoTone, LocalFireDepartmentOutlined, PaidTwoTone, PeopleAltTwoTone, PersonAddAltOutlined, ReceiptLongTwoTone, ShoppingCartCheckoutOutlined, WorkspacePremiumTwoTone, } from '@mui/icons-material';
+import { AddBusinessOutlined, BadgeOutlined, CategoryOutlined, CreditScoreOutlined, FaceRetouchingNaturalOutlined, HourglassFullTwoTone, InsightsOutlined, Inventory2TwoTone, LocalFireDepartmentOutlined, PaidTwoTone, PeopleAltTwoTone, PersonAddAltOutlined, ReceiptLongTwoTone, ShoppingCartCheckoutOutlined, WorkspacePremiumTwoTone, } from '@mui/icons-material';
 import { Avatar, Box, Chip, Divider, Paper, Rating, Typography, useTheme } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Fragment, useEffect, useState } from 'react';
@@ -9,6 +9,8 @@ import PieChart from './pieChart';
 import TwoBarChar from './twoBarChart';
 import { SquareBlock } from 'assets/styles/constantsStyle';
 import { discountPrice } from 'utils';
+import { ROLE_OPTION } from 'constants/optionSelectField';
+import DoughnutChart from './dougnnut';
 
 const renderRankingOrder = (index) => {
     switch (index) {
@@ -41,6 +43,7 @@ function Dashboard() {
     const [statisticOrder, setStatisticOrder] = useState([])
     const [potentialCustomer, setPotentialCustomer] = useState([])
     const [bestSeller, setBestSeller] = useState([])
+    const [employeeCount, setEmployeeCount] = useState([])
 
     useEffect(() => {
         axiosPrivate
@@ -81,6 +84,18 @@ function Dashboard() {
                 step: 1,
             })
             .then((res) => setStatisticOrder(res))
+            .catch((err) => console.log(err))
+
+        axiosPrivate
+            .get('/dashboard/employee-count')
+            .then((res) => {
+                var result = [];
+                res.forEach(element => {
+                    var roleName = ROLE_OPTION.find(item => item.value === element._id).label;
+                    result.push({ ...element, role: roleName })
+                });
+                setEmployeeCount(result);
+            })
             .catch((err) => console.log(err))
 
         axiosPrivate
@@ -128,7 +143,7 @@ function Dashboard() {
                         <Chip
                             size='small' color='chipWarning' sx={{ px: 0.5, fontWeight: 600 }}
                             icon={<ShoppingCartCheckoutOutlined />}
-                            label={`Đã bán ${productCount?.inWeek} đôi giày trong tuần qua`}
+                            label={`Đã bán ${productCount?.inWeek} sản phẩm trong tuần qua`}
                         />
                     </Paper>
                 </Grid>
@@ -202,17 +217,6 @@ function Dashboard() {
                     </Paper>
                 </Grid>
 
-                {/* <Grid xs={12}>
-                    <Paper sx={{ px: 1.5, pt: 1.5, pb: 1 }}>
-                        <Typography variant='h6' className='content-left-center'>
-                            <InsightsOutlined sx={{ mr: 1 }} />
-                            Tổng quan bán hàng
-                        </Typography>
-                        <Divider sx={{ my: 0.5 }} />
-                    </Paper>
-                </Grid> */}
-
-
                 <Grid xs={4}>
                     <Paper sx={{ px: 1.5, pt: 1.5, pb: 1, height: '100%' }}>
                         <Typography variant='h6' className='content-left-center'>
@@ -276,13 +280,18 @@ function Dashboard() {
                 <Grid xs={4}>
                     <Paper sx={{ px: 1.5, pt: 1.5, pb: 1, height: '100%' }}>
                         <Typography variant='h6' className='content-left-center'>
-                            <CategoryOutlined sx={{ mr: 1 }} />
-                            Sản phẩm theo thương hiệu
+                            <BadgeOutlined sx={{ mr: 1 }} />
+                            Thống kê nhân viên
                         </Typography>
                         <Divider sx={{ my: 0.5 }} />
-                        <Box>
-
-                        </Box>
+                        {(employeeCount.length !== 0) &&
+                            <DoughnutChart
+                                data={employeeCount}
+                                labelName='role'
+                                valueName='count'
+                                tooltip='Số nhân viên'
+                            />
+                        }
                     </Paper>
                 </Grid>
 

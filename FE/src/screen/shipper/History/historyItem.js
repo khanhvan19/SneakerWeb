@@ -6,7 +6,7 @@ import { formatLocalDateTime, formatMoney } from "utils/formatters";
 
 function HistoryItem({ data }) {
     var paymentLogo = PAYMENT_METHOD.find(e => e.value === data.paymentMethod).logo;
-    console.log(data);
+
     return (  
         <Paper elevation={1} sx={{ p: 1 }}>
             <Box className='content-center-between'>

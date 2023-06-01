@@ -154,7 +154,7 @@ function Login() {
                     Đăng ký
                 </Typography>
             </Box>
-            <Box maxWidth={500} mx={'auto'} >
+            <Box maxWidth={500} mx={'auto'} pb={4}>
                 {(status === 'fail') && (
                     <Alert severity="warning">{error?.message}</Alert>
                 )}
@@ -225,7 +225,7 @@ function Login() {
                         )
                     }}
                 </Formik>
-                <Divider textAlign="left" sx={{ mt: 5, mb: 3 }}>
+                <Divider textAlign="left" sx={{ mt: 5, mb: 2.5 }}>
                     <i>Hoặc đăng nhập với:</i>
                 </Divider>
                 <Box className='content-center'>

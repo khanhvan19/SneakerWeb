@@ -43,6 +43,7 @@ import { getComparator, stableSort } from "utils/tableSort";
 import RouterBreadcrumbs from "components/ui/breadcrumbs";
 import AddEditForm from "./addEditForm";
 import { checkPermission } from "utils";
+import Swal from "sweetalert2";
 
 function CategoryScreen() {
     const employee = useSelector((state) => state.auth?.login?.data);
@@ -133,33 +134,53 @@ function CategoryScreen() {
 
     const handleDeleteCategory = (id) => {
         if(checkPermission("P1_5") === true) {
-            alert('Bạn có chắc muốn xóa?');
-            axiosPrivate
-                .delete(`category/${id}`, 
-                    { headers: { token: employee?.accessToken} }
-                )
-                .then((res) => {
-                    toast.success(res.message, TOAST_DEFAULT_STYLE);
-                    setRefresh((prev) => prev + 1);
-                })
-                .catch((err) => {
-                    toast.error(err.message, TOAST_DEFAULT_STYLE);
-                })
+            Swal.fire({
+                icon: 'question',
+                title: 'Bạn có chắc muốn xóa danh mục này?',
+                confirmButtonText: 'Xác nhận',
+                confirmButtonColor: '#ff5630',
+                showCancelButton: true,
+                cancelButtonText: 'Trở lại',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosPrivate
+                        .delete(`category/${id}`, 
+                            { headers: { token: employee?.accessToken} }
+                        )
+                        .then((res) => {
+                            toast.success(res.message, TOAST_DEFAULT_STYLE);
+                            setRefresh((prev) => prev + 1);
+                        })
+                        .catch((err) => {
+                            toast.error(err.message, TOAST_DEFAULT_STYLE);
+                        })
+            }})
         }
     }
 
     const handleToggleStatus = (id, status) => {
         if(checkPermission("P1_4") === true) {
-            alert(`Bạn có chắc muốn ${status === true ? "ẩn" : "hiển thị"} danh mục này?`);
-            axiosPrivate
-                .put(`category/hide/${id}`, { headers: { token: employee?.accessToken} })
-                .then((res) => {
-                    toast.success(res.message, TOAST_DEFAULT_STYLE);
-                    setRefresh((prev) => prev + 1);
-                }) 
-                .catch((err) => {
-                    toast.error(err.message, TOAST_DEFAULT_STYLE);
-                })
+            Swal.fire({
+                icon: 'question',
+                title: `Bạn có chắc muốn ${status === true ? 'ẩn' : 'hiển thị'} danh mục này?`,
+                confirmButtonText: 'Xác nhận',
+                confirmButtonColor:  status === true ? '#ffab00' : '#00ab55',
+                showCancelButton: true,
+                cancelButtonText: 'Trở lại',
+                cancelButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axiosPrivate
+                        .put(`category/hide/${id}`, { headers: { token: employee?.accessToken} })
+                        .then((res) => {
+                            toast.success(res.message, TOAST_DEFAULT_STYLE);
+                            setRefresh((prev) => prev + 1);
+                        }) 
+                        .catch((err) => {
+                            toast.error(err.message, TOAST_DEFAULT_STYLE);
+                        })
+            }})
         }
     }
 

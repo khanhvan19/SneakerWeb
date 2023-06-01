@@ -49,7 +49,7 @@ function ResetPassword() {
     return (
         <Box flex={1}>
             <Typography variant='h5' mb={2}>Đổi mật khẩu</Typography>
-            <Paper elevation={2} sx={{ borderRadius: 0, mb: 1.5, py: 4 }}>
+            <Paper elevation={2} sx={{ borderRadius: 0, mb: 1.5, py: 7 }}>
                 <Box width='40%' mx='auto'>
                     <Formik
                         initialValues={initValue}

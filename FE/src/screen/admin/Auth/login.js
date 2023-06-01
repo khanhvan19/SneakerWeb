@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import * as image from 'assets/images'
 
 import { 
     Box, 
@@ -73,9 +74,9 @@ function AdminLogin() {
                         <LinearProgress color="success" />
                     </div>
                 )}
-                <Box className={cx('logo')} sx={{ mb: 2}}>
-                    <img src="" alt="Logo" />
-                    <span>ADMINISTRATOR</span>
+                <Box className={cx('logo')} sx={{ mb: 2}} display='flex' alignItems='end'>
+                    <Box component='img' src={image.logoLight} alt="Logo" height={40} />
+                    <Box component='span' lineHeight={1}>ADMINISTRATOR</Box>
                 </Box>
                 <Typography variant="h4" sx={{ mb: 2, fontSize: "2rem" }}>
                         Welcome Back!

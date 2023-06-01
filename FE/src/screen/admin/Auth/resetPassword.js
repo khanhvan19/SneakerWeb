@@ -10,10 +10,6 @@ import {
     Card, 
     CardContent, 
     CardHeader, 
-    Dialog, 
-    DialogActions, 
-    DialogContent, 
-    DialogTitle, 
     Divider, 
     FormControl, 
     FormHelperText, 
@@ -32,14 +28,12 @@ import {
 import styles from './Login.module.scss'
 import classNames from "classnames/bind";
 import axiosPublic from "utils/axiosPublic";
+import Swal from "sweetalert2";
 const cx = classNames.bind(styles);
 
 function ResetPassword() {
     const { id, token } = useParams();
     const [dataVerify, setDataVerify] = useState({});
-    const [openDialog, setOpenDialog] = useState(false);
-    const [dataResetPassword, setDataResetPassword] = useState({});
-    const [successDialog, setSuccessDialog] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
@@ -57,7 +51,17 @@ function ResetPassword() {
             })
             .catch((err) => {
                 setDataVerify(err)
-                setOpenDialog(true)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Email xác minh đã hết hạn!',
+                    text: 'Email xác minh người dùng của bạn đã hết thời gian hiệu lực, vui lòng thực hiện lại quá trình xác minh!',
+                    confirmButtonText: "Thực hiện lại",
+                    confirmButtonColor: '#ff5630',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate("/admin/forgot_password", {replace: true})
+                    }
+                })
             })
     }, [id, token])
 
@@ -82,8 +86,17 @@ function ResetPassword() {
                 .post(`employee/reset-password/${id}`, {password: values.password})
                 .then((res) => {
                     setLoading(false);
-                    setDataResetPassword(res)
-                    setSuccessDialog(true);
+                    Swal.fire({
+                        icon: 'success',
+                        title: res.message,
+                        text: 'Mật khẩu đăng nhập của bạn đã đặt lại thành công, vui lòng tiến hành đăng nhập!',
+                        confirmButtonText: "Xác nhận",
+                        confirmButtonColor: '#00ab55',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate("/admin/login", {replace: true})
+                        }
+                    })
                 })
                 .catch((err) => {
                     toast.error(err.message, {
@@ -100,7 +113,7 @@ function ResetPassword() {
     return (  
         <div className={cx('form-wrapper')}>   
             {(dataVerify.status === 'success') 
-            ? (
+            && (
                 <div className={cx('reset-password-form-container')}>
                     {(loading === true) && (
                         <div className={cx('loading-bar')}>
@@ -176,67 +189,14 @@ function ResetPassword() {
                                 </FormControl>
                                 <FormControl margin="normal" fullWidth>
                                     <Button type="submit" variant="contained" size="large" color="success">
-                                        Reset Password
+                                        Đặt lại mật khẩu
                                     </Button>
                                 </FormControl>
                             </Box>
                         </CardContent>
                     </Card>
-
-                    <Dialog
-                        open={successDialog}
-                        keepMounted
-                        aria-describedby="alert-dialog-slide-description"
-                    >
-                        <DialogContent>
-                            <Box>
-                                <span>{dataResetPassword.message}</span>
-                                <span> Vui lòng tiến hành đăng nhập lại!</span>
-                            </Box>
-                        </DialogContent>
-                        <DialogActions sx={{ p: 2 }}>
-                            <Button 
-                                variant="contained"
-                                color="success"
-                                onClick={() => {
-                                    setSuccessDialog(false);
-                                    navigate("/admin/login", {replace: true})
-                                }} 
-                            >
-                                Đăng nhập
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
                 </div>
-            ) 
-            : (
-                <Dialog
-                    open={openDialog}
-                    keepMounted
-                    aria-describedby="alert-dialog-slide-description"
-                >
-                    <DialogTitle sx={{ fontWeight: 600, color: "error.main" }}>Xác minh thất bại</DialogTitle>
-                    <Divider />
-                    <DialogContent>
-                        <Box>
-                            <p>{dataVerify.message}</p>
-                            <p>Vui lòng thực hiện lại quá trình xác minh để tiến hành đổi mật khẩu!</p>
-                        </Box>
-                    </DialogContent>
-                    <DialogActions sx={{ p: 2 }}>
-                        <Button 
-                            variant="contained"
-                            color="error"
-                            onClick={() => {
-                                setOpenDialog(false);
-                                navigate("/admin/forgot_password", {replace: true})
-                            }} 
-                        >
-                            Xác minh lại
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            )} 
+            )}
         </div>
     );
 }

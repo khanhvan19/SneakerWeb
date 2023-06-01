@@ -131,7 +131,7 @@ function OrderDetail() {
                                 connector={<ReadOnlyStepConnector />}
                                 sx={{ px: 2, mb: 2 }}
                             >
-                                {order.itinerary.map((step, idx) => (
+                                {order.itinerary.reverse().map((step, idx) => (
                                     <Step key={idx}>
                                         <StepLabel sx={{ pb: 0.5 }} StepIconComponent={ReadOnlyStepIcon}>
                                             <Typography

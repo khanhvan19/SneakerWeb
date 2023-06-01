@@ -9,6 +9,7 @@ import axiosClientPrivate from "utils/axiosClientPrivate";
 import { useSelector } from "react-redux";
 import * as video from 'assets/video'
 import BrandTile from "./brandTile";
+import ProductHoverImageCard from "components/ui/Card/productHoverImageCard";
 
 function HomePage() {
     const isLogin = useSelector((state) => state.client?.login?.data);
@@ -64,11 +65,11 @@ function HomePage() {
 
             <Box mt={6}>
                 <Box className='content-center'>
-                    <LocalFireDepartmentTwoTone sx={{ mr: 1.5, fontSize: 32 }} /> 
+                    <LocalFireDepartmentTwoTone sx={{ mr: 1.5, fontSize: 32, color: '#ff5630' }} /> 
                     <Typography variant="h4" textTransform='uppercase' fontWeight={700} >
                         Sản phẩm nổi bật
                     </Typography>
-                    <LocalFireDepartmentTwoTone sx={{ ml: 1.5, fontSize: 32 }} /> 
+                    <LocalFireDepartmentTwoTone sx={{ ml: 1.5, fontSize: 32, color: '#ff5630' }} /> 
                 </Box>
                 <Divider sx={{ width: '33%', mx: 'auto', mt: 0.5 }} />
                 <Box 
@@ -83,7 +84,7 @@ function HomePage() {
                     <ProductSlider tile={4}>
                         {bestSeller.length !== 0 && bestSeller.map((product, idx) => (
                             <Box key={idx} px={1}>
-                                <ProductSummaryCard data={product} />
+                                <ProductHoverImageCard data={product} />
                             </Box>
                         ))}
                     </ProductSlider>
@@ -145,11 +146,11 @@ function HomePage() {
             {(favorite.length >= 4 && (
                 <Box mt={8}>
                     <Box className='content-center'>
-                        <FavoriteTwoTone sx={{ mr: 1.5, fontSize: 32 }} /> 
+                        <FavoriteTwoTone sx={{ mr: 1.5, fontSize: 32, color: '#ff0000' }} /> 
                         <Typography variant="h4" textTransform='uppercase' fontWeight={700} >
                             Bạn đã yêu thích
                         </Typography>
-                        <FavoriteTwoTone sx={{ ml: 1.5, fontSize: 32 }} /> 
+                        <FavoriteTwoTone sx={{ ml: 1.5, fontSize: 32, color: '#ff0000' }} /> 
                     </Box>
                     <Divider sx={{ width: '33%', mx: 'auto', mt: 0.5 }} />
                     <Box 
@@ -164,7 +165,7 @@ function HomePage() {
                         <ProductSlider tile={4}>
                             {favorite.map((product, idx) => (
                                 <Box key={idx} px={1}>
-                                    <ProductSummaryCard data={product} />
+                                    <ProductHoverImageCard data={product} />
                                 </Box>
                             ))}
                         </ProductSlider>

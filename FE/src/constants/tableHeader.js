@@ -79,20 +79,19 @@ export const TABLE_HEAD_VOUCHER = [
 ];
 
 export const TABLE_HEAD_ORDER = [
-    { label: "Mã đơn hàng", sortBy: '_id'},
-    { label: "Ngày đặt hàng", sortBy: 'createdAt'}, 
     { label: "Người nhận"}, 
+    { label: "Ngày đặt hàng", sortBy: 'createdAt'}, 
     { label: "Số điện thoại"}, 
-    { label: "Vận chuyển", sortBy: 'deliveryMethod' },
-    { label: "Thanh toán", sortBy: 'paymentMethod'},
     { label: "Trạng thái", sortBy: 'status'}, 
     { label: "Tổng giá trị", sortBy: 'total'}, 
+    { label: "Vận chuyển", sortBy: 'deliveryMethod' },
+    { label: "Thanh toán", sortBy: 'paymentMethod'},
 ];
 
 export const TABLE_HEAD_REVIEW = [
     { label: "Sản phẩm"},
     { label: "Khách hàng"}, 
-    { label: "Ngày gửi", sortBy: 'createdAt'}, 
     { label: "Mức đánh giá", sortBy: 'rating'},
     { label: "Trạng thái", sortBy: 'status'}, 
+    { label: "Ngày gửi", sortBy: 'createdAt'}, 
 ];

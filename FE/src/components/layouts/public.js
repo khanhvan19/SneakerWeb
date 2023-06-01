@@ -14,7 +14,7 @@ function PublicLayout() {
             <Header />
             <Container 
                 maxWidth='xl' 
-                sx={{ py: 2 }}
+                sx={{ pt: 2, pb: 4 }}
             >
                 <Outlet />
             </Container>

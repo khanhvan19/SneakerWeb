@@ -4,7 +4,7 @@ import { formatMoney } from "utils/formatters";
 import { Link, useNavigate } from "react-router-dom";
 import { SquareBlock, TOAST_CENTER_STYLE } from "assets/styles/constantsStyle";
 import { discountPrice } from "utils";
-import { ColorLensOutlined, DesignServicesOutlined, Favorite, FavoriteBorder} from "@mui/icons-material";
+import { ColorLensOutlined, DesignServicesOutlined, Favorite, FavoriteBorder, FavoriteTwoTone} from "@mui/icons-material";
 import axiosClientPrivate from "utils/axiosClientPrivate";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFavorite } from "redux/slices/favorite.slice";
@@ -136,7 +136,10 @@ function ProductCard({data}) {
                     color={isFavorite ? 'btnError' : 'btnDark'}
                     onClick={handleToggleFavorite}
                 >
-                    {isFavorite ? <Favorite /> : <FavoriteBorder />}
+                    {isFavorite 
+                        ? <FavoriteTwoTone sx={{ fontSize: 28 }}  /> 
+                        : <FavoriteBorder sx={{ fontSize: 28 }}  />
+                    }
                 </IconButton>
             </Box>     
         </Box>

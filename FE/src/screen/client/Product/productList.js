@@ -41,7 +41,7 @@ function ProductList() {
         return {
             ...params,
             page: parseInt(params.page) || 1,
-            limit: parseInt(params.limit) || 10,
+            limit: parseInt(params.limit) || 12,
             sort: params.sort || SORT_OPTION[0].value,
         }
     }, [location.search])
@@ -55,6 +55,8 @@ function ProductList() {
                 setPagination(res.pagination)
                 if(res.category) title.push(res.category);
                 if(res.brand) title.push(res.brand)
+                if(res.size) title.push(res.size)
+                if(res.star) title.push(res.star)
             })
             .catch((err) => console.log(err))
 
@@ -122,7 +124,7 @@ function ProductList() {
                                 ))}
                             </Typography>
                     }      
-                    <Typography variant='h6' fontWeight={400} ml={2}>[{products.length}]</Typography>                    
+                    <Typography variant='h6' fontWeight={400} ml={2}>[{pagination?.total}]</Typography>                    
                 </Box>
                 <Box>
                     <Button 
@@ -165,7 +167,7 @@ function ProductList() {
                 ))}
             </Grid>
             {(pagination && totalPages > 1) && (
-                <Box className='content-center' pt={3} pb={2}>
+                <Box className='content-center' pt={3}>
                     <Pagination 
                         size='large' color='btnDark'
                         showFirstButton showLastButton

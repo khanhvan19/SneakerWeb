@@ -57,7 +57,7 @@ function CartItem({ data , onRefresh, onDelete}) {
                     </Typography>
                 </Box>
             </Box>
-            <Box flex={2} display='flex' justifyContent='space-between'>
+            <Box flex={2} display='flex' justifyContent='space-between' alignItems='center'>
                 <Box>
                     <QuantityButton 
                         quantity={data.quantity} 
@@ -74,7 +74,7 @@ function CartItem({ data , onRefresh, onDelete}) {
                     <Typography fontWeight={700}>
                         {formatMoney(discountPrice(data._id.price, data._id.discount) * data.quantity)}
                     </Typography>
-                    {data._id.discount && (
+                    {data._id.discount !== 0 && (
                         <Typography 
                             variant='body2' color='text.secondary'
                             sx={{ textDecoration: 'line-through' }} 

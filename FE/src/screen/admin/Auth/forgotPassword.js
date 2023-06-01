@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,16 +10,12 @@ import {
     CardActions, 
     CardContent, 
     CardHeader,
-    Dialog,
-    DialogContent,
-    DialogTitle,
     Divider,
     FormControl,
     FormHelperText,
     InputLabel,
     LinearProgress,
     OutlinedInput,
-    Slide,
 } from '@mui/material';
 import { 
     ReportOutlined,
@@ -27,17 +23,15 @@ import {
 
 import styles from './Login.module.scss'
 import classNames from "classnames/bind";
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
+
 import axiosPublic from 'utils/axiosPublic';
+import Swal from 'sweetalert2';
 const cx = classNames.bind(styles);
 
 function ForgotPasword() {
     const [loading, setLoading] = useState(false);
-    const [openDialog, setOpenDialog] = useState(false);
-
-    const Transition = forwardRef(function Transition(props, ref) {
-        return <Slide direction="down" ref={ref} {...props} />;
-      });
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {
@@ -55,7 +49,17 @@ function ForgotPasword() {
                 .post("employee/forgot-password", values)
                 .then((res) => {
                     setLoading(false);
-                    setOpenDialog(true);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Email xác minh đã được gửi!',
+                        text: 'Email chỉ có hiệu lực trong 15 phút. Vui lòng xác minh để thực hiện tạo lại mật khẩu!',
+                        confirmButtonText: "Hoàn thành",
+                        confirmButtonColor: '#00ab55',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.replace('https://mail.google.com/');
+                        }
+                    })
                 })
                 .catch((err) => {
                     toast.error(err.message, {
@@ -121,23 +125,6 @@ function ForgotPasword() {
                     </Card>
                 </Box>
 
-                <Dialog
-                    open={openDialog}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    aria-describedby="alert-dialog-slide-description"
-                >
-                    <DialogTitle sx={{ fontWeight: 600, color: "success.main" }}>Email xác minh tài khoản đã gửi thành công</DialogTitle>
-                    <Divider />
-                    <DialogContent>
-                        <div>Email xác minh tài khoản đã được gửi đến địa chỉ <Box component="span" sx={{ fontWeight: 600 }}>Google Mail</Box> của bạn!</div>
-                        <div>Email chỉ có hiệu lực trong <Box component="span" sx={{ fontWeight: 600 }}>15 phút</Box>. Vui lòng nhanh chóng xác nhận để có thể thực hiện đổi mật khẩu!</div>
-                        <Box component="small" sx={{ color: 'error.main', fontStyle: "italic", mt: 2 }} className={cx('content-left-center')}>
-                            <ReportOutlined sx={{ fontSize: "1rem", lineHeight: 1, mr: 0.25 }}/>
-                            Nếu không tìm thấy email, Hãy thử tìm trong mục "Spam" hoặc "Thư rác"
-                        </Box>
-                    </DialogContent>
-                </Dialog>
                 <ToastContainer style={{ width: '400px' }}/>
             </div>
         </div>

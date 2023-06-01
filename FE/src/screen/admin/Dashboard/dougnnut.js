@@ -6,14 +6,14 @@ import {
     Legend,
     LinearScale,
 } from 'chart.js';
-import { Pie } from "react-chartjs-2";
+import { Doughnut, Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend, LinearScale)
 
 const bgColorChar = ['#00ab5580', '#ff563080', '#ffab0080', '#00b8d980', '#efb0c980', '#9932cc80']
 const borderColorChar = ['#00ab55', '#ff5630', '#ffab00', '#00b8d9', '#efb0c9', '#9932cc']
 
-function PieChart({ data, labelName, valueName, tooltip }) {
+function DoughnutChart({ data, labelName, valueName, tooltip }) {
     const theme = useTheme()
 
     const chartData = {
@@ -32,8 +32,7 @@ function PieChart({ data, labelName, valueName, tooltip }) {
     const chartOptions = {
         plugins: {
             legend: {
-                position: "right",
-                align: "center",
+                align: "start",
                 labels: {
                     color: theme.palette.text.secondary
                 }
@@ -44,7 +43,7 @@ function PieChart({ data, labelName, valueName, tooltip }) {
 
     return (
         <Box>
-            <Pie
+            <Doughnut
                 width='100%'
                 data={chartData}
                 options={chartOptions}
@@ -53,4 +52,4 @@ function PieChart({ data, labelName, valueName, tooltip }) {
     );
 }
 
-export default PieChart;
+export default DoughnutChart;

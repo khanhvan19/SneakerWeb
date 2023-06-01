@@ -123,28 +123,25 @@ function OrderScreen() {
                                     return (
                                         <TableRow hover key={idx}>
                                             <TableCell sx={{whiteSpace: 'nowrap'}}>
-                                                <Typography textTransform='uppercase'>{row._id}</Typography>
+                                                {row.address.name}
                                             </TableCell>
                                             <TableCell sx={{whiteSpace: 'nowrap'}}>
                                                 {formatLocalDateTime(row.createdAt)}
                                             </TableCell>
                                             <TableCell sx={{whiteSpace: 'nowrap'}}>
-                                                {row.address.name}
-                                            </TableCell>
-                                            <TableCell sx={{whiteSpace: 'nowrap'}}>
                                                 {row.address.phone}
-                                            </TableCell>
-                                            <TableCell sx={{whiteSpace: 'nowrap'}}>
-                                                {row.deliveryMethod}
-                                            </TableCell>
-                                            <TableCell sx={{whiteSpace: 'nowrap'}}>
-                                                {PAYMENT_METHOD.find(e => e.value === row.paymentMethod).label}
                                             </TableCell>
                                             <TableCell sx={{whiteSpace: 'nowrap'}}>
                                                 {renderOrderStatus(row.status, 'medium')}
                                             </TableCell>
                                             <TableCell sx={{whiteSpace: 'nowrap'}}>
                                                 {formatMoney(row.total)}
+                                            </TableCell>
+                                            <TableCell sx={{whiteSpace: 'nowrap'}}>
+                                                {row.deliveryMethod}
+                                            </TableCell>
+                                            <TableCell sx={{whiteSpace: 'nowrap'}}>
+                                                {PAYMENT_METHOD.find(e => e.value === row.paymentMethod).label}
                                             </TableCell>
                                             <TableCell>
                                                 <Button 

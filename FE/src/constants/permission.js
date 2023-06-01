@@ -13,29 +13,6 @@ export const PERMISSION = [
         {id: "P2_4", label: "Ẩn/Hiện thương hiệu"},
         {id: "P2_5", label: "Xóa thương hiệu"},
     ]},
-    {id: "P3", label: "Quản lý mẫu sản phẩm", child: [
-        {id: "P3_1", label: "Xem danh sách"},
-        {id: "P3_2", label: "Thêm mẫu sản phẩm"},
-        {id: "P3_3", label: "Chỉnh sửa mẫu sản phẩm"},
-        {id: "P3_4", label: "Ẩn/Hiện mẫu sản phẩm"},
-        {id: "P3_5", label: "Xóa mẫu sản phẩm"},
-    ]},
-    {id: "P4", label: "Quản lý sản phẩm", child: [
-        {id: "P4_1", label: "Xem danh sách"},
-        {id: "P4_2", label: "Thêm sản phẩm"},
-        {id: "P4_3", label: "Chỉnh sửa sản phẩm"},
-        {id: "P4_4", label: "Ẩn/Hiện sản phẩm"},
-        {id: "P4_5", label: "Xóa sản phẩm"},
-    ]},
-    {id: "P5", label: "Quản lý đơn hàng", child: [
-        {id: "P5_1", label: "Xem danh sách"},
-        // {id: "P3_2", label: "Xóa nhân viên"},
-    ]},
-    {id: "P6", label: "Quản lý khách hàng", child: [
-        {id: "P6_1", label: "Xem danh sách"},
-        {id: "P6_2", label: "Chỉnh sửa thông tin"},
-        {id: "P6_3", label: "Khóa/Mở khóa tài khoản"},
-    ]},
     {id: "P7", label: "Quản lý nhân viên", child: [
         {id: "P7_1", label: "Xem danh sách"},
         {id: "P7_2", label: "Thêm nhân viên"},
@@ -44,15 +21,34 @@ export const PERMISSION = [
         {id: "P7_5", label: "Chỉnh sửa quyền"},
         {id: "P7_6", label: "Xóa nhân viên"},
     ]},
+    {id: "P6", label: "Quản lý khách hàng", child: [
+        {id: "P6_1", label: "Xem danh sách"},
+        {id: "P6_2", label: "Chỉnh sửa thông tin"},
+        {id: "P6_3", label: "Khóa/Mở khóa tài khoản"},
+    ]},
     {id: "P8", label: "Quản lý nhập hàng", child: [
         {id: "P8_1", label: "Xem danh sách"},
         {id: "P8_2", label: "Thêm phiếu nhập"},
     ]},
-    {id: "P9", label: "Quản lý phiếu giảm giá", child: [
+    {id: "P5", label: "Quản lý đơn hàng", child: [
+        {id: "P5_1", label: "Xem danh sách"},
+        {id: "P5_2", label: "Hủy đơn hàng"},
+        {id: "P5_3", label: "Duyệt đơn hàng"},
+    ]},
+    {id: "P4", label: "Quản lý sản phẩm", child: [
+        {id: "P4_1", label: "Xem danh sách"},
+        {id: "P4_2", label: "Thêm sản phẩm"},
+        {id: "P4_3", label: "Chỉnh sửa sản phẩm"},
+        {id: "P4_4", label: "Ẩn/Hiện sản phẩm"},
+        {id: "P4_5", label: "Xóa sản phẩm"},
+        {id: "P4_6", label: "Thêm phiên bản"},
+        {id: "P4_7", label: "Chỉnh sửa phiên bản"},
+        {id: "P4_8", label: "Ẩn/Hiện phiên bản"},
+        {id: "P4_9", label: "Xóa phiên bản"},
+    ]},
+    {id: "P9", label: "Quản lý đánh giá sản phẩm", child: [
         {id: "P9_1", label: "Xem danh sách"},
-        {id: "P9_2", label: "Thêm phiếu giảm giá"},
-        {id: "P9_3", label: "Chỉnh sửa phiếu giảm giá"},
-        {id: "P9_4", label: "Ẩn/Hiện phiếu giảm giá"},
-        {id: "P9_5", label: "Xóa phiếu giảm giá"},
+        {id: "P9_2", label: "Xem chi tiết đánh giá"},
+        {id: "P9_3", label: "Duyệt/Chặn đánh giá"},
     ]},
 ] 

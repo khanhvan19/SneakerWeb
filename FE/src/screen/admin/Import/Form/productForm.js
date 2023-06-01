@@ -23,7 +23,6 @@ function ProductForm({ data, handleChange, setFieldValue }) {
     }, [employee])
 
     const findPrice = (productId) => {
-        console.log(productId);
         const product = products.find(product => product._id === productId);
         return product.price;
     }
@@ -37,7 +36,6 @@ function ProductForm({ data, handleChange, setFieldValue }) {
         var sizes = [];
         if(products.length !== 0) {
             const product = products.find(item => item._id === productId)
-            console.log(product);
             sizes = SIZE_OPTION.filter((size) => (
                 size.value >= product.sizeMin && size.value <= product.sizeMax
             ))
@@ -110,7 +108,7 @@ function ProductForm({ data, handleChange, setFieldValue }) {
                                                 render={(childArrayHelpers) => (
                                                     <>
                                                         {item?.detail?.map((detail, idx) => (
-                                                            <Grid container py={0} key={idx}>
+                                                            <Grid container py={0} spacing={2} key={idx}>
                                                                 <Grid xs={4}>
                                                                     <Field
                                                                         name={`products[${index}].detail[${idx}].version`}
